@@ -1,6 +1,8 @@
+import { ReviewItem } from "@/models/business";
+import { format } from "date-fns";
 import React from "react";
 
-const ReviewCards = () => {
+const ReviewCards = ({ review }: { review: ReviewItem }) => {
   return (
     <div className="user_review_card">
       <div className="card_head">
@@ -11,15 +13,12 @@ const ReviewCards = () => {
             <img src="/images/star.png" alt="" />
           </div>
         </div>
-        <span className="date">1 April 2022</span>
+        <span className="date">
+          {format(new Date(review.updatedAt), "dd MMM yyyy")}
+        </span>
       </div>
       <div className="card_text">
-        <p>
-          Fantasia Oasis Hotel exceeded all expectations! From the luxurious
-          room to the exquisite dining and magical entertainment, every moment
-          was enchanting. Attentive staff and a dreamlike pool area made this
-          stay truly unforgettable. Highly recommend for a magical escape!
-        </p>
+        <p>{review.review}</p>
       </div>
     </div>
   );

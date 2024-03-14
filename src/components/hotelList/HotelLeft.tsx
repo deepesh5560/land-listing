@@ -1,8 +1,9 @@
 import React from "react";
 import HotelCard from "./HotelCard";
 import CantFind from "./CantFind";
+import { BusinessItem } from "@/models/business";
 
-const HotelLeft = () => {
+const HotelLeft = ({ data }: { data: any[] }) => {
   return (
     <div className="col-md-8">
       <h5 className="hotel_title">Best Hotels in Prickly Pear Island</h5>
@@ -73,11 +74,9 @@ const HotelLeft = () => {
       </div>
 
       <div className="hotel_row">
-        <HotelCard />
-        <HotelCard />
-        <HotelCard />
-        <HotelCard />
-        <HotelCard />
+        {data.map((item: any) => {
+          return <HotelCard data={item.business} key={item._id} />;
+        })}
       </div>
 
       <div className="pagination_custom">

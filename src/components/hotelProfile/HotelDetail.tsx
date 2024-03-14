@@ -1,6 +1,23 @@
+import { BusinessItem, ReviewItem } from "@/models/business";
 import React from "react";
+import Contact from "../hotelList/contact";
 
-const HotelDetail = () => {
+const HotelDetail = ({
+  data,
+}: {
+  data: { business: any; reviews: ReviewItem[] };
+}) => {
+  const business: BusinessItem = data.business.business;
+
+  const address = [
+    business.buildingNo,
+    business.address,
+    business.area,
+    business.landmark,
+    business.island,
+    business.country,
+  ].join(", ");
+
   return (
     <>
       <section className="about_hotel_block">
@@ -8,24 +25,23 @@ const HotelDetail = () => {
           <div className="about_hotel">
             <div className="left_details">
               <div className="">
-                <h5 className="hotel_name">Hotel Staywell</h5>
+                <h5 className="hotel_name">{business.businessName}</h5>
                 <div className="start_rating">
                   <img src="/images/star.png" alt="" />
                   <span>319 rating</span>
                 </div>
-                <span className="verified_label">
-                  <img src="/images/verfied_label.png" alt="" />
-                  verified
-                </span>
+                {business.isVerified && (
+                  <span className="verified_label">
+                    <img src="/images/verfied_label.png" alt="" />
+                    verified
+                  </span>
+                )}
                 <p className="location_hotel">
                   <img className="me-3" src="/images/location.png" alt="" />
-                  Prickly Pear Island
+                  {address}
                 </p>
                 <div className="btn_connecting">
-                  <button className="btn_number">
-                    <img className="me-2" src="/images/phn.png" alt="" />
-                    Show Number
-                  </button>
+                  <Contact contact={business.contacts[0]} />
                   <button className="btn_chat">
                     <img
                       className="me-2"
@@ -48,7 +64,7 @@ const HotelDetail = () => {
             <div className="right_star">
               <span className="star">4 Star</span>
               <span className="hotel">Hotel</span>
-              <span className="day_night">3,456/night</span>
+              <span className="day_night">{business.price}/night</span>
             </div>
           </div>
         </div>

@@ -1,7 +1,28 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import ReviewCards from "./ReviewCards";
+import { BusinessItem, ReviewItem } from "@/models/business";
+import ReviewInput from "./ReviewInput";
 
-const Quickinfo = () => {
+const Quickinfo = ({
+  data,
+}: {
+  data: { business: any; reviews: ReviewItem[] };
+}) => {
+  const business: BusinessItem = data.business.business;
+
+  const reviews = data.reviews;
+
+  const address = [
+    business.buildingNo,
+    business.address,
+    business.area,
+    business.landmark,
+    business.island,
+    business.country,
+  ].join(", ");
+
   return (
     <section className="information_block">
       <div className="container">
@@ -25,15 +46,17 @@ const Quickinfo = () => {
               <div className="row">
                 <div className="col-md-5">
                   <h5>Facilities</h5>
-                  <p>Mini Fridge Available</p>
-                  <p>Room Heater Available</p>
-                  <p>Smoking Allowed</p>
-                  <p>Street Parking</p>
+                  {business.facilities.map((item, index) => {
+                    return <p key={index}>{item}</p>;
+                  })}
                 </div>
                 <div className="col-md-3">
                   <h5>Timing</h5>
-                  <p>Check In-12:00 PM</p>
-                  <p>Check Out-11:00 AM</p>
+                  {business.workingTime.map((item, index) => {
+                    return <p key={index}>{item}</p>;
+                  })}
+                  {/* <p>Check In-12:00 PM</p>
+                  <p>Check Out-11:00 AM</p> */}
                 </div>
                 <div className="col-md-4 text-right">
                   <h5>Complimentary</h5>
@@ -51,37 +74,15 @@ const Quickinfo = () => {
 
             <div className="review_block pt-4">
               <h4 className="h4_title pb-4">Reviews & Ratings</h4>
-              <div className="row pb-4">
-                <div className="col-md-8">
-                  <div className="rating_block">
-                    <span className="total_rating">4.4</span>
-                    <div className="rating_number">
-                      <h5>146 Ratings</h5>
-                      <p>Total number of rating across the web</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="star_review">
-                    <h5>Start your Review</h5>
-                    <span className="star_s">
-                      <img src="/images/star_2.png" alt="" />
-                    </span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="select_custom textarea_custom">
-                <label>Write your Review</label>
-                <textarea name="" id="" rows={5}></textarea>
-                <button className="btn_sumbit">Submit</button>
-              </div>
+              <ReviewInput businessId={business._id} />
 
               <h4 className="h4_title py-4">User Review</h4>
 
               <div className="user_review_block">
-                <ReviewCards />
-                <ReviewCards />
+                {reviews.map((item) => {
+                  return <ReviewCards review={item} key={item._id} />;
+                })}
               </div>
             </div>
           </div>
@@ -110,7 +111,7 @@ const Quickinfo = () => {
                     <img src="/images/mdi_location.png" alt="" />
                     Get Direction
                   </a>
-                  <span>Prickly Pear Island</span>
+                  <span>{address}</span>
                 </div>
                 <div className="right">
                   <a href="#">

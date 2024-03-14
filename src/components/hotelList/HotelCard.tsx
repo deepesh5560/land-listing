@@ -1,12 +1,19 @@
-"use client";
-
 import React from "react";
-import { useRouter } from "next/navigation";
+import { BusinessItem } from "@/models/business";
+import Contact from "./contact";
+import Link from "next/link";
 
-const HotelCard = () => {
-  const Router = useRouter();
+const HotelCard = ({ data }: { data: BusinessItem }) => {
+  const address = [
+    data.buildingNo,
+    data.address,
+    data.area,
+    data.landmark,
+    data.island,
+    data.country,
+  ].join(", ");
   return (
-    <div className="hotel_card" onClick={() => Router.push("/productList/1")}>
+    <Link className="hotel_card" href={`/productList/${data._id}`}>
       <div className="img_crousel">
         <div
           id="carouselExampleIndicators"
@@ -85,31 +92,31 @@ const HotelCard = () => {
         </div>
       </div>
       <div className="hotel_right_details">
-        <h5 className="hotel_name">Hotel Staywell</h5>
+        <h5 className="hotel_name">{data.businessName}</h5>
         <div className="start_rating">
           <img src="images/star.png" alt="" />
           <span>319 rating</span>
         </div>
-        <span className="verified_label">
-          <img src="images/verfied_label.png" alt="" />
-          verified
-        </span>
+
+        {data.isVerified && (
+          <span className="verified_label">
+            <img src="images/verfied_label.png" alt="" />
+            verified
+          </span>
+        )}
         <p className="location_hotel">
           <img className="me-3" src="images/location.png" alt="" />
-          Prickly Pear Island
+          {address}
         </p>
         <div className="btn_connecting">
-          <button className="btn_number">
-            <img className="me-2" src="images/phn.png" alt="" />
-            Show Number
-          </button>
+          <Contact contact={data.contacts[0]} />
           <button className="btn_chat">
             <img className="me-2" src="images/logos_whatsapp-icon.png" alt="" />
             Chat
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
