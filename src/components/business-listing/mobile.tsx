@@ -58,7 +58,7 @@ const MobileDetail = ({
                 <p className="paragraph">
                   We will use this information to assist you in claiming your
                   business page. If your business is already listed, it will be
-                  automatically identified."
+                  automatically identified.
                 </p>
                 <div className="login_input-business">
                   <select value={countryCode} onChange={onCountryCodeSelect}>
