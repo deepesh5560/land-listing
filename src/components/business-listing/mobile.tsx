@@ -29,7 +29,7 @@ const MobileDetail = ({
     //   setOtpSent(true);
     //   toast.success("OTP Sent");
     // } else {
-    //   console.error(error, "error");
+    //   console.log(error, "error");
     // }
   };
 
