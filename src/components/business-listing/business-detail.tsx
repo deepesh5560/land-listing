@@ -17,11 +17,7 @@ const initialData = {
 
 const postalRegex = /^\d{0,10}$/;
 
-const BusinessDetail = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
   const [detail, setDetail] = useState(initialData);
 
   const onTextChange = (e: any) => {
@@ -59,7 +55,7 @@ const BusinessDetail = ({
       return;
     }
 
-    setCurrentSection("congratulations");
+    onNext();
   };
 
   return (

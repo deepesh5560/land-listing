@@ -101,6 +101,9 @@ button.btn_location {
 }
 
 .category_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 22%;
     text-align: center;
     padding: 10px;

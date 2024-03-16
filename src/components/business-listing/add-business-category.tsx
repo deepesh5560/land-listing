@@ -4,11 +4,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CategoryItem } from "../category/CategoryLeft";
 import toast from "react-hot-toast";
 
-const AddBusinessCategory = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
   const [categories, setCategories] = useState([]);
   const [customCategory, setCustomCategory] = useState("");
 
@@ -29,7 +25,7 @@ const AddBusinessCategory = ({
       toast.error(error);
       return;
     }
-    setCurrentSection("add-tin");
+    onNext();
   };
 
   useEffect(() => {

@@ -56,7 +56,7 @@ const HotelDetail = ({
                   </button>
                   <button className="btn_rate btn_c">
                     <img className="me-2" src="/images/like.png" alt="" />
-                    Tap to Rate{" "}
+                    Tap to Rate
                   </button>
                 </div>
               </div>

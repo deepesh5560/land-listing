@@ -14,8 +14,7 @@ const CategoryCard = ({ detail }: { detail: CategoryItem }) => {
   return (
     <Link
       href={`/productList?categoryId=` + detail._id}
-      className="category_card"
-      // onClick={() => Route.push("/productList?categoryId=" + detail._id)}
+      className="category_card items-center"
     >
       <img className="card_icon" src="images/hotel.png" />
       <h5 className="card_title">{detail.title}</h5>

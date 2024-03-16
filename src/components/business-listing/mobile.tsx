@@ -4,11 +4,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 
 const mobileRegex = /^\d{0,10}$/;
 
-const MobileDetail = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const MobileDetail = ({ onNext }: { onNext: () => void }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState(countryList[0].dial_code);
 
@@ -22,7 +18,7 @@ const MobileDetail = ({
       role: "business",
     };
 
-    setCurrentSection("business-detail");
+    onNext();
     // const { data, error, success } = await onSendOTP(payload);
 
     // if (success) {

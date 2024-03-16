@@ -1,11 +1,7 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
 
-const Upload = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const Upload = ({ onNext }: { onNext: () => void }) => {
   return (
     <>
       <section className="mult-step_section py-5">
@@ -34,11 +30,7 @@ const Upload = ({
                 </div>
                 <div className="btn_form">
                   <button className="btn_skip">Skip</button>
-                  <button
-                    onClick={() => setCurrentSection("add-business-category")}
-                  >
-                    Save & Continue
-                  </button>
+                  <button onClick={onNext}>Save & Continue</button>
                 </div>
               </div>
             </div>

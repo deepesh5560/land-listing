@@ -1,11 +1,25 @@
 "use client";
+import { networkInstance } from "@/lib/network-instance";
 import React, { Dispatch, SetStateAction } from "react";
 
-const AddTin = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const AddTin = ({ onNext }: { onNext: () => void }) => {
+  const onSubmit = async (e: any) => {
+    // const { data, error, success } = await networkInstance(
+    //   "POST",
+    //   "businesses/category",
+    //   {}
+    // );
+
+    // if (!success) {
+    //   toast.error(error);
+    //   return;
+    // }
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("BUSINESS_LIST_ACTIVE_SECTION", "0");
+    }
+  };
+
   return (
     <>
       <section className="mult-step_section py-5">
@@ -25,7 +39,7 @@ const AddTin = ({
                   </div>
                   <div className="btn_form">
                     <button className="btn_skip">Skip</button>
-                    <button>Save & Continue</button>
+                    <button onClick={onSubmit}>Save & Continue</button>
                   </div>
                 </div>
               </div>

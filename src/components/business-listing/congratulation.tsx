@@ -1,11 +1,7 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
 
-const Congratulations = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const Congratulations = ({ onNext }: { onNext: () => void }) => {
   return (
     <>
       <section className="congratulations py-5">
@@ -21,9 +17,7 @@ const Congratulations = ({
                 Just need few more steps to complete your business profile
               </p>
               <div className="btn_form">
-                <button onClick={() => setCurrentSection("contact-detail")}>
-                  Continue
-                </button>
+                <button onClick={onNext}>Continue</button>
               </div>
             </div>
           </div>

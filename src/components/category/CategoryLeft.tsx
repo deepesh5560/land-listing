@@ -27,7 +27,7 @@ const CategoryLeft = async () => {
   return (
     <div className="col-md-7">
       <div className="left_block">
-        <h1 className="bg-purple-200">Search across all Caribbean Island</h1>
+        <h1 className="">Search across all Caribbean Island</h1>
         <h2>Businesses</h2>
         <div className="location_based_search">
           <div className="location_div">

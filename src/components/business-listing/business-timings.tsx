@@ -19,11 +19,7 @@ const initialData = {
   checkOut: "",
 };
 
-const BusinessTimings = ({
-  setCurrentSection,
-}: {
-  setCurrentSection: Dispatch<SetStateAction<string>>;
-}) => {
+const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
   const [detail, setDetail] = useState(initialData);
 
   const onTextChange = (e: any) => {
@@ -52,7 +48,7 @@ const BusinessTimings = ({
       toast.error(error);
       return;
     }
-    setCurrentSection("upload");
+    onNext();
   };
 
   const onDaySelect = (id: number) => {
