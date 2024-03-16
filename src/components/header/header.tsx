@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+"use client"
+
+import React, { useEffect, useState }  from "react";
 import LoginDialog from "../dialog/login-dialog";
 import Link from "next/link";
+import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 
 const Header = () => {
+  const condition = typeof window !== "undefined";
+  const logs = condition &&  localStorage.getItem('LOGGED_IN')
+  const [Logs,setLogs]=useState<any>('')
+  useEffect(()=>{
+   
+     setLogs(logs?true:false)
+    
+  },[])
+
   return (
     <>
       <header className="custom_header header1 ">
@@ -24,7 +36,7 @@ const Header = () => {
             </button>
             <div className="collapse navbar-collapse " id="navbarNavDropdown">
               <ul className="navbar-nav ms-auto">
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -60,8 +72,8 @@ const Header = () => {
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li className="nav-item">
+                </li> */}
+              {!Logs ?  <li className="nav-item">
                   <a
                     className="nav-link me-3"
                     aria-current="page"
@@ -74,7 +86,7 @@ const Header = () => {
                     />
                     Free Business Listing{" "}
                   </a>
-                </li>
+                </li>:""}
                 <LoginDialog />
               </ul>
             </div>

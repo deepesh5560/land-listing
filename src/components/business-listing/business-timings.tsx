@@ -15,7 +15,7 @@ const days = [
 
 const initialData = {
   days: days,
-  checkIn: "Mr.",
+  checkIn: "",
   checkOut: "",
 };
 
@@ -28,7 +28,7 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
   };
 
   const onSubmit = async (e: any) => {
-    const payload = {
+    const payload:any = {
       workingDays: detail.days.reduce((acc, it) => {
         if (it.selected) {
           return [...acc, it.day];
@@ -37,6 +37,21 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
       }, [] as string[]),
       workingTime: [detail.checkIn, detail.checkOut],
     };
+
+    
+      if ( !payload.workingDays?.[0]) {
+        toast.error("Fill all time fields");
+        return;
+      }
+      if (!payload.workingTime?.[0]) {
+        toast.error("Fill all time fields");
+        return;
+      }
+      if (!payload.workingTime?.[1]) {
+        toast.error("Fill all time fields");
+        return;
+      }
+    
 
     const { data, error, success } = await networkInstance(
       "POST",
@@ -83,8 +98,9 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
                           type="checkbox"
                           checked={item.selected}
                           onClick={() => onDaySelect(item.id)}
+                          id={`${item.id}`}
                         />
-                        <label>{item.day}</label>
+                        <label htmlFor={`${item.id}`}>{item.day}</label>
                       </div>
                     );
                   })}
@@ -98,10 +114,11 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
                         name="checkIn"
                         onChange={onTextChange}
                       >
-                        {[...new Array(12)].map((_, index) => {
+                        {[...new Array(24)].map((_, index) => {
                           const time = `${(index + 1)
                             .toString()
-                            .padStart(2, "0")}:00 AM`;
+                            .padStart(2, "0")}:00`;
+
                           return (
                             <option key={index} value={time}>
                               {time}
@@ -109,7 +126,7 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
                           );
                         })}
 
-                        <option value="01:00">09:00</option>
+                        
                       </select>
                     </div>
                   </div>
@@ -121,10 +138,10 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
                         name="checkOut"
                         onChange={onTextChange}
                       >
-                        {[...new Array(12)].map((_, index) => {
+                        {[...new Array(24)].map((_, index) => {
                           const time = `${(index + 1)
                             .toString()
-                            .padStart(2, "0")}:00 PM`;
+                            .padStart(2, "0")}:00`;
                           return (
                             <option key={index} value={time}>
                               {time}
@@ -132,7 +149,7 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
                           );
                         })}
 
-                        <option value="01:00">09:00</option>
+                      
                       </select>
                     </div>
                   </div>

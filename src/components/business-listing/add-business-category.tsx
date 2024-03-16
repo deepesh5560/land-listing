@@ -6,14 +6,15 @@ import toast from "react-hot-toast";
 
 const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
   const [categories, setCategories] = useState([]);
-  const [customCategory, setCustomCategory] = useState("");
 
   const onSubmit = async (e: any) => {
     const payload = {
-      category: !!customCategory.length
-        ? customCategory
-        : categories.find((category: any) => category.selected) || "",
+      category:  categories.find((category: any) => category.selected) || "",
     };
+    if(!payload?.category){
+      toast.error('Select a category!')
+      return;
+    }
 
     const { data, error, success } = await networkInstance(
       "POST",
@@ -68,24 +69,6 @@ const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
                   Let your user know what type of your business is
                 </p>
                 <div className="custom_form">
-                  <div className="form-outline">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={customCategory}
-                      onChange={(e) => setCustomCategory(e.target.value)}
-                    />
-                    <label className="form-label" style={{ marginLeft: 0 }}>
-                      Add Custom Business Category
-                    </label>
-                  </div>
-                  <div className="btn_form">
-                    <button className="btn_skip">Skip</button>
-                    <button onClick={onSubmit}>Save & Continue</button>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
                 <h5 className="h5_title pb-3">Select your Industry Category</h5>
                 <div className="industry_category">
                   <div className="category_section">
@@ -107,6 +90,11 @@ const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
                           </div>
                         );
                       })}
+                  </div>
+                </div>
+                  <div className="btn_form">
+                    <button className="btn_skip" onClick={()=>onNext()}>Skip</button>
+                    <button onClick={onSubmit}>Save & Continue</button>
                   </div>
                 </div>
               </div>

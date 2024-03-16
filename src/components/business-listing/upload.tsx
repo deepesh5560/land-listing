@@ -1,7 +1,54 @@
 "use client";
-import React, { Dispatch, SetStateAction } from "react";
+import { networkInstance } from "@/lib/network-instance";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Upload = ({ onNext }: { onNext: () => void }) => {
+  const [selectedImages, setSelectedImages] = useState<any>([]);
+useEffect(()=>{
+  console.log(selectedImages)
+},[selectedImages])
+ // Function to handle file selection
+const handleImageChange = (e:any) => {
+  const file = e.target.files[0];
+  console.log(e.target.files)
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSelectedImages((prev:any)=>[...prev,reader.result]);
+    };
+    reader.readAsDataURL(file);
+  }
+
+
+};
+
+const hnadleUpload = async () => {
+
+  if (!selectedImages.length) {
+    toast.error('Image bucket is empty');
+    return;
+  }
+  const formData = new FormData();
+  selectedImages.forEach((image:any, index:number) => {
+    formData.append(`image_${index}`, image);
+  });
+
+  const { data, error, success } = await networkInstance(
+    "POST",
+    "businesses/photos",
+    formData
+  );
+  if (!success) {
+    console.error(error, "error");
+    toast.error(error);
+    return;
+  }else{
+    toast.success(data.message);
+    onNext();
+  }
+}
+
   return (
     <>
       <section className="mult-step_section py-5">
@@ -12,8 +59,8 @@ const Upload = ({ onNext }: { onNext: () => void }) => {
               <h3 className="h3_title">Upload your Business Photo</h3>
               <div className="custom_form">
                 <div className="custom_upload_file">
-                  <input type="file" id="file" />
-                  <label>
+                 
+                  <label htmlFor="file">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="52"
@@ -27,10 +74,21 @@ const Upload = ({ onNext }: { onNext: () => void }) => {
                       />
                     </svg>
                   </label>
+  
                 </div>
+                <div>
+               <input type="file" accept="image/*" id="file"  onChange={handleImageChange} />
+      {selectedImages && (
+        <div>
+          {selectedImages.map((image:any, index:number) => (
+            <img key={index} src={image} alt={`Selected ${index + 1}`} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
+          ))}
+        </div>
+      )}
+    </div>
                 <div className="btn_form">
-                  <button className="btn_skip">Skip</button>
-                  <button onClick={onNext}>Save & Continue</button>
+                  <button onClick={onNext} style={{marginRight:'10px'}} className="btn_skip">Skip</button>
+                  <button onClick={hnadleUpload} >Save & Continue</button>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { networkInstance } from "@/lib/network-instance";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 
-const initialData = {
+const initialData:any = {
   businessName: "",
   postalCode: "",
   buildingNumber: "",
@@ -27,12 +27,17 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
 
   const onPostalCodeChange = (e: any) => {
     const { name, value } = e.target;
-    if (postalRegex.test(value)) {
       setDetail({ ...detail, [name]: value });
-    }
   };
 
   const onSubmit = async () => {
+    for ( let item in detail ) {
+      if ( detail[item] === "" ) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+      
+    }
     const payload = {
       businessName: detail.businessName,
       address: detail.streetName,

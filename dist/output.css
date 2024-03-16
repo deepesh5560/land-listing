@@ -1651,6 +1651,7 @@ span.add_number {
 .days_of_week .input_weak {
   position: relative;
   width: 80px;
+  cursor: pointer;
 }
 
 .days_of_week .input_weak input[type="checkbox"] {
