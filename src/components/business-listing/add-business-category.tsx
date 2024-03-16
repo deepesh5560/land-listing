@@ -42,7 +42,6 @@ const AddBusinessCategory = ({
         const newData = data.data.map((item: any) => {
           return { ...item, selected: false };
         });
-        console.log(newData, "newData", data);
         setCategories(newData);
       }
     };

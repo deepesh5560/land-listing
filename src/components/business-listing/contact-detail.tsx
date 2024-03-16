@@ -1,10 +1,14 @@
 "use client";
 import { networkInstance } from "@/lib/network-instance";
-import CountryList from "country-list-with-dial-code-and-flag";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 
-const list = CountryList.getAll();
+const list = [{
+  code: "AF",
+dial_code: "+93",
+flag:"🇦🇫",
+name:"Afghanistan",
+}]
 const mobileRegex = /^\d{0,10}$/;
 
 const initialData = {
@@ -96,11 +100,11 @@ const ContactDetail = ({
                       {list.map((item, index) => {
                         return (
                           <option
-                            value={item.countryCode}
+                            value={item.code}
                             key={index}
                             className=""
                           >
-                            <p>{item.code + " " + item.countryCode}</p>
+                            <p>{item.code + " " + item.code}</p>
                           </option>
                         );
                       })}

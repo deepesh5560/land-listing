@@ -12,7 +12,6 @@ import React, { useState } from "react";
 const Page = () => {
   const [currentSection, setCurrentSection] = useState("mobile");
 
-  console.log();
   return (
     <div>
       {currentSection === "mobile" && (

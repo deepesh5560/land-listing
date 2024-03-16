@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/next": "^9.0.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
-    "country-list-with-dial-code-and-flag": "^5.0.3",
     "date-fns": "^3.3.1",
     "next": "14.0.4",
     "react": "^18",

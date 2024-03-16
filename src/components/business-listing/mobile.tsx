@@ -1,8 +1,7 @@
 "use client";
-import CountryList from "country-list-with-dial-code-and-flag";
+import { countryList } from "@/lib/location";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
-const list = CountryList.getAll();
 const mobileRegex = /^\d{0,10}$/;
 
 const MobileDetail = ({
@@ -11,7 +10,7 @@ const MobileDetail = ({
   setCurrentSection: Dispatch<SetStateAction<string>>;
 }) => {
   const [mobileNumber, setMobileNumber] = useState("");
-  const [countryCode, setCountryCode] = useState(list[0].countryCode);
+  const [countryCode, setCountryCode] = useState(countryList[0].dial_code);
 
   const onSubmit = async (e: any) => {
     if (!mobileNumber.length) {
@@ -62,14 +61,10 @@ const MobileDetail = ({
                 </p>
                 <div className="login_input-business">
                   <select value={countryCode} onChange={onCountryCodeSelect}>
-                    {list.map((item, index) => {
+                    {countryList.map((item, index) => {
                       return (
-                        <option
-                          value={item.countryCode}
-                          key={index}
-                          className=""
-                        >
-                          <p>{item.code + " " + item.countryCode}</p>
+                        <option value={item.dial_code} key={index} className="">
+                          {item.code + " " + item.dial_code}
                         </option>
                       );
                     })}

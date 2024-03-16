@@ -19,10 +19,8 @@ export async function networkInstance(method:methodType,url:string,payload?:any)
         cache:"no-store",
         headers: customHeaders,
     }).then(res=>res.json());
-      console.log(response,"response")
       return { success: true, data: response, error: null };
     } catch (error: any) {
-      console.log(error.message,"error in get categories")
       return { success: false, error: error.message, data: null };
     }
   }

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import CategoryCard from "./CategoryCard";
-import { getCategories } from "@/app/actions";
 import { networkInstance } from "@/lib/network-instance";
 
 export interface CategoryItem {

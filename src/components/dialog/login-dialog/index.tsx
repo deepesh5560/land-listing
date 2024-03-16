@@ -5,10 +5,9 @@ import { onSendOTP, onVerifyOTP } from "./actions";
 import OTPInput from "react-otp-input";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import CountryList from "country-list-with-dial-code-and-flag";
+import { countryList } from "@/lib/location";
 
 const mobileRegex = /^\d{0,10}$/;
-const otpRegex = /^\d{0,6}$/;
 
 interface User {
   _id: string;
@@ -30,26 +29,12 @@ interface AuthResponse {
   message: string;
 }
 
-const list = CountryList.getAll();
-
-const countryCodes = [
-  {
-    id: 0,
-    title: "+91 IN",
-    value: "+91",
-  },
-  {
-    id: 1,
-    title: "+27 SA",
-    value: "+27",
-  },
-];
-
 const LoginDialog = ({}: Props) => {
+  const condition = typeof window !== "undefined";
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const [mobileNumber, setMobileNumber] = useState("");
-  const [countryCode, setCountryCode] = useState(list[0].countryCode);
+  const [countryCode, setCountryCode] = useState(countryList?.[0]?.dial_code);
   const [otp, setOTP] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<string | null>("");
@@ -118,8 +103,7 @@ const LoginDialog = ({}: Props) => {
   };
 
   useEffect(() => {
-    console.log("token", localStorage.getItem("LOGGED_IN"));
-    setIsLoggedIn(localStorage.getItem("LOGGED_IN"));
+    setIsLoggedIn(() => (condition ? localStorage.getItem("LOGGED_IN") : ""));
   }, []);
 
   return (
@@ -178,14 +162,14 @@ const LoginDialog = ({}: Props) => {
                           value={countryCode}
                           onChange={(e) => setCountryCode(e.target.value)}
                         >
-                          {list.map((item, index) => {
+                          {countryList.map((item, index) => {
                             return (
                               <option
-                                value={item.countryCode}
+                                value={item.dial_code}
                                 key={index}
                                 className=""
                               >
-                                <p>{item.code + " " + item.countryCode}</p>
+                                <p>{item.code + " " + item.dial_code}</p>
                               </option>
                             );
                           })}

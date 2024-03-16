@@ -31,7 +31,6 @@ const BusinessDetail = ({
 
   const onPostalCodeChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(name, "name", value);
     if (postalRegex.test(value)) {
       setDetail({ ...detail, [name]: value });
     }

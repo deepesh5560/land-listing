@@ -22,7 +22,6 @@ const ReviewInput = ({ businessId }: { businessId: string }) => {
         review: review,
       }
     );
-    console.log(data, "data", error);
     if (!success) {
       toast.error("Please login to post a review");
       return;
