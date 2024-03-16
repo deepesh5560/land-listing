@@ -4,20 +4,22 @@ import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CategoryItem } from "./CategoryLeft";
 import Link from "next/link";
+import Image from "next/image";
+import { url } from "inspector";
 
 const CategoryCard = ({ detail }: { detail: CategoryItem }) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const params = new URLSearchParams(searchParams);
-  const path = `${"productList"}?${params.toString()}`;
+  const pic =
+    process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
+    "/" +
+    detail.icon;
 
   return (
     <Link
-      href={`/productList?categoryId=` + detail._id}
+      href={`/productList?category=` + detail._id}
       className="category_card items-center"
     >
-      <img className="card_icon" src="images/hotel.png" />
-      <h5 className="card_title">{detail.title}</h5>
+      <img alt="" height={60} className="card_icon" src={pic} />
+      <h5 className="cart-title-text">{detail.title}</h5>
     </Link>
   );
 };

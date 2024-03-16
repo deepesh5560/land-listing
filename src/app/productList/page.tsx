@@ -1,23 +1,51 @@
 import HotelList from "@/components/hotelList/HotelList";
+import { createQuery } from "@/lib/helpers";
 import { networkInstance } from "@/lib/network-instance";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 export const dynamic = "force-dynamic";
 
+const pageSize = 10;
+
+// interface FilterParams {
+//   categoryId: string;
+//   isVerified: string;
+//   rating: string;
+// }
+
 const Page = async ({
   searchParams,
 }: {
-  searchParams: { categoryId: string };
+  searchParams: { [key: string]: string | number };
 }) => {
+  let query = createQuery(searchParams);
+  if (!query || !searchParams?.page) {
+    query = `${createQuery({
+      category: searchParams.category,
+      page: 1,
+      limit: pageSize,
+    })}`;
+  } else {
+    query = `${query}&limit=${pageSize}`;
+  }
+
   const { data, error, success } = await networkInstance(
     "GET",
-    `home/businesses?limit=10&page=1&category=${searchParams.categoryId}`
+    `home/businesses?${query}`
   );
 
-  if (!success) {
+  if (!success || !data.success) {
     return (
-      <div>
-        <h2>Retry</h2>
+      <div
+        style={{
+          height: "80vh",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2>{data.message}</h2>
       </div>
     );
   }
@@ -39,7 +67,13 @@ const Page = async ({
         </div>
       </section>
 
-      {!!data?.data.length && <HotelList data={data.data} />}
+      {!!data?.data.length && (
+        <HotelList
+          data={data.data}
+          searchParams={searchParams}
+          pageInfo={data.meta}
+        />
+      )}
     </div>
   );
 };

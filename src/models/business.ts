@@ -29,6 +29,9 @@
     _id: string;
     user: {
         _id: string;
+        email:string;
+        name:string;
+        avatar:string;
     };
     business: string;
     rating: number;

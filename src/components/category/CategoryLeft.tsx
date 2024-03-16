@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import CategoryCard from "./CategoryCard";
 import { networkInstance } from "@/lib/network-instance";
+import CategoryHomeFilter from "./CategoryHomeFilter";
+import { useParams } from "next/navigation";
+import MoreCategoryBtn from "./MoreCategoryBtn";
 
 export interface CategoryItem {
   _id: string;
@@ -10,10 +13,14 @@ export interface CategoryItem {
   isDeleted: boolean;
 }
 
-const CategoryLeft = async () => {
+const CategoryLeft = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | number };
+}) => {
   const { data, error, success } = await networkInstance(
     "GET",
-    "home/categories"
+    `home/categories?limit=${searchParams?.limit ?? 11}`
   );
 
   if (!success) {
@@ -29,24 +36,17 @@ const CategoryLeft = async () => {
       <div className="left_block">
         <h1 className="">Search across all Caribbean Island</h1>
         <h2>Businesses</h2>
-        <div className="location_based_search">
-          <div className="location_div">
-            <button className="btn_location">Location based Business</button>
-          </div>
-          <div className="search_div">
-            <input type="text" placeholder="What are you looking for?" />
-          </div>
-        </div>
+
+        <CategoryHomeFilter />
         <div className="category_section">
           {data?.data.length &&
-            data.data.map((item: CategoryItem, index: number) => {
+            [...data.data].map((item: CategoryItem, index: number) => {
               return <CategoryCard detail={item} key={item._id} />;
             })}
 
-          <div className="category_card">
-            <img className="card_icon" src="images/menu-bar.png" />
-            <h5 className="card_title">More Category</h5>
-          </div>
+          {data?.meta.total_records - data?.data.length >= 1 && (
+            <MoreCategoryBtn totalCategories={data?.meta.total_records} />
+          )}
         </div>
       </div>
     </div>

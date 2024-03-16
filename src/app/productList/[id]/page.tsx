@@ -10,17 +10,25 @@ const Page = async ({ params }: { params: { id: string } }) => {
     `/home/businesses/${params.id}`
   );
 
-  if (!success) {
+  if (!data.success) {
     return (
-      <div>
-        <h2>Retry</h2>
+      <div
+        style={{
+          height: "80vh",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2>{data.message}</h2>
       </div>
     );
   }
 
   return (
     <>
-      <ProfileBanner />
+      <ProfileBanner data={data.data} />
       <HotelDetail data={data.data} />
       <Quickinfo data={data.data} />
     </>

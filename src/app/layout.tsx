@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header/header";
 import "bootstrap/dist/css/bootstrap.css";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         <Toaster
           position="top-right"
           reverseOrder={true}

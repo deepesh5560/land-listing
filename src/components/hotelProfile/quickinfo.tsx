@@ -4,12 +4,15 @@ import React from "react";
 import ReviewCards from "./ReviewCards";
 import { BusinessItem, ReviewItem } from "@/models/business";
 import ReviewInput from "./ReviewInput";
+import { cookies } from "next/headers";
 
 const Quickinfo = ({
   data,
 }: {
   data: { business: any; reviews: ReviewItem[] };
 }) => {
+  const authToken = cookies().get("AUTH_TOKEN")?.value;
+
   const business: BusinessItem = data.business.business;
 
   const reviews = data.reviews;
@@ -73,9 +76,12 @@ const Quickinfo = ({
             </div>
 
             <div className="review_block pt-4">
-              <h4 className="h4_title pb-4">Reviews & Ratings</h4>
-
-              <ReviewInput businessId={business._id} />
+              {!!authToken?.length && (
+                <>
+                  <h4 className="h4_title pb-4">Reviews & Ratings</h4>
+                  <ReviewInput businessId={business._id} />
+                </>
+              )}
 
               <h4 className="h4_title py-4">User Review</h4>
 

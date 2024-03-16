@@ -5,13 +5,14 @@ import Link from "next/link";
 
 const HotelCard = ({ data }: { data: BusinessItem }) => {
   const address = [
-    data.buildingNo,
-    data.address,
-    data.area,
-    data.landmark,
-    data.island,
-    data.country,
+    data?.buildingNo,
+    data?.address,
+    data?.area,
+    data?.landmark,
+    data?.island,
+    data?.country,
   ].join(", ");
+
   return (
     <Link className="hotel_card" href={`/productList/${data._id}`}>
       <div className="img_crousel">

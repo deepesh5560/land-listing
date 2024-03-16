@@ -5,7 +5,7 @@ const RecentMain = () => {
   return (
     <section className="recent_activity">
       <div className="container px-0">
-        <h3>Recent Activity</h3>
+        <h3>Top Rated Business</h3>
         <div className="row">
           <RecentCard />
           <RecentCard />

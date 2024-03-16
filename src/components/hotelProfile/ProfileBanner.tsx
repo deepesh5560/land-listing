@@ -1,6 +1,16 @@
+import { ReviewItem } from "@/models/business";
 import React from "react";
 
-const ProfileBanner = () => {
+const ProfileBanner = ({
+  data,
+}: {
+  data: { business: any; reviews: ReviewItem[] };
+}) => {
+  const pics = data.business?.business?.images.map((item: string) => {
+    const pic =
+      process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] + "/" + item;
+    return pic;
+  });
   return (
     <>
       <section className="breadcrumb_section">
@@ -25,15 +35,31 @@ const ProfileBanner = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 left pe-0">
-              <img src="/images/gallery1.jpg" className="img-fluid" alt="" />
+              <img
+                src={pics[0] ?? "/images/gallery1.jpg"}
+                className="img-fluid"
+                style={{ backgroundColor: "pink" }}
+                alt=""
+                height={"100%"}
+              />
             </div>
             <div className="col-md-6 right ps-0">
-              <img src="/images/Image-3.jpg" className="img-fluid" alt="" />
-              <img src="/images/image-2.jpg" className="img-fluid" alt="" />
+              <img
+                src={pics[1] ?? "/images/Image-3.jpg"}
+                className="img-fluid"
+                alt=""
+              />
+              <img
+                src={pics[2] ?? "/images/image-2.jpg"}
+                className="img-fluid"
+                alt=""
+              />
             </div>
-            <div className="show_all_photos">
-              <button>Show all Photos</button>
-            </div>
+            {!!pics[3] && (
+              <div className="show_all_photos">
+                <button>Show all Photos</button>
+              </div>
+            )}
           </div>
         </div>
       </section>
