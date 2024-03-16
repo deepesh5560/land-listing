@@ -14,12 +14,12 @@ const steps: {
 } = {
   0: "mobile",
   1: "business-detail",
-  2: "congratulations",
-  3: "contact-detail",
-  4: "business-timings",
-  5: "upload",
-  6: "add-business-category",
-  7: "add-tin",
+  2: "contact-detail",
+  3: "business-timings",
+  4: "upload",
+  5: "add-business-category",
+  6: "add-tin",
+  7: "congratulations",
 };
 
 const Page = () => {
@@ -55,9 +55,7 @@ const Page = () => {
       {steps[currentSection] === "business-detail" && (
         <BusinessDetail onNext={onNext} />
       )}
-      {steps[currentSection] === "congratulations" && (
-        <Congratulations onNext={onNext} />
-      )}
+
       {steps[currentSection] === "contact-detail" && (
         <ContactDetail onNext={onNext} />
       )}
@@ -69,6 +67,10 @@ const Page = () => {
         <AddBusinessCategory onNext={onNext} />
       )}
       {steps[currentSection] === "add-tin" && <AddTin onNext={onNext} />}
+
+      {steps[currentSection] === "congratulations" && (
+        <Congratulations onNext={onNext} />
+      )}
     </div>
   );
 };

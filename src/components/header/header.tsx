@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LoginDialog from "../dialog/login-dialog";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -7,9 +8,9 @@ const Header = () => {
       <header className="custom_header header1 ">
         <div className="container">
           <nav className="navbar navbar-expand-lg">
-            <a className="navbar-brand" href="#">
+            <Link className="navbar-brand" href="/">
               <img src="images/logo.png" />
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"

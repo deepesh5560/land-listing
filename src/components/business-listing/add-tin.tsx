@@ -15,9 +15,7 @@ const AddTin = ({ onNext }: { onNext: () => void }) => {
     //   return;
     // }
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("BUSINESS_LIST_ACTIVE_SECTION", "0");
-    }
+    onNext();
   };
 
   return (
