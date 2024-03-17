@@ -1,19 +1,17 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import LoginDialog from "../dialog/login-dialog";
 import Link from "next/link";
 import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 
 const Header = () => {
   const condition = typeof window !== "undefined";
-  const logs = condition &&  localStorage.getItem('LOGGED_IN')
-  const [Logs,setLogs]=useState<any>('')
-  useEffect(()=>{
-   
-     setLogs(logs?true:false)
-    
-  },[])
+  const logs = condition && localStorage.getItem("LOGGED_IN");
+  const [Logs, setLogs] = useState<any>("");
+  useEffect(() => {
+    setLogs(logs ? true : false);
+  }, []);
 
   return (
     <>
@@ -73,20 +71,24 @@ const Header = () => {
                     </li>
                   </ul>
                 </li> */}
-              {!Logs ?  <li className="nav-item">
-                  <a
-                    className="nav-link me-3"
-                    aria-current="page"
-                    href="/business-listing"
-                  >
-                    <img
-                      className="me-3"
-                      src="images/ic_baseline-business.png"
-                      alt=""
-                    />
-                    Free Business Listing{" "}
-                  </a>
-                </li>:""}
+                {!Logs ? (
+                  <li className="nav-item">
+                    <a
+                      className="nav-link me-3"
+                      aria-current="page"
+                      href="/business-listing"
+                    >
+                      <img
+                        className="me-3"
+                        src="images/ic_baseline-business.png"
+                        alt=""
+                      />
+                      Free Business Listing{" "}
+                    </a>
+                  </li>
+                ) : (
+                  ""
+                )}
                 <LoginDialog />
               </ul>
             </div>

@@ -10,7 +10,7 @@ export const onVerifyOTP = async (payload: any) => {
       "auth/verify-otp",
       payload
     );
-
+        
     if (success) {
       cookies().set("AUTH_TOKEN", data.accessToken, { httpOnly: true });
       return { data, error, success } 

@@ -16,7 +16,11 @@ const HotelList = ({
     <section className="best_hotel_section">
       <div className="container">
         <div className="row">
-          <HotelLeft data={data} pageInfo={pageInfo} />
+          <HotelLeft
+            data={data}
+            pageInfo={pageInfo}
+            searchParams={searchParams}
+          />
           <HotelRight />
         </div>
       </div>

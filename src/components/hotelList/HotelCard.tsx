@@ -2,6 +2,8 @@ import React from "react";
 import { BusinessItem } from "@/models/business";
 import Contact from "./contact";
 import Link from "next/link";
+import { getImageURL } from "@/lib/helpers";
+import CarouselDialog from "../dialog/carousel-dialog.tsx";
 
 const HotelCard = ({ data }: { data: BusinessItem }) => {
   const address = [
@@ -13,57 +15,20 @@ const HotelCard = ({ data }: { data: BusinessItem }) => {
     data?.country,
   ].join(", ");
 
+  const pics = getImageURL(data.images) as string[];
+
   return (
-    <Link className="hotel_card" href={`/productList/${data._id}`}>
+    <div className="hotel_card">
       <div className="img_crousel">
-        <div
-          id="carouselExampleIndicators"
-          className="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div className="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
-          </div>
-          <div className="carousel-inner">
-            <div className="carousel-item active">
+        <div id="carouselExampleIndicators" data-bs-ride="carousel">
+          <div className="">
+            <div className="carousel-item active relative">
               <img
-                src="images/slider1.png"
+                src={pics[0] ?? "images/slider1.png"}
                 className="d-block w-100"
                 alt="..."
               />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/slider1.png"
-                className="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/slider1.png"
-                className="d-block w-100"
-                alt="..."
-              />
+              {/* <CarouselDialog pics={pics}/> */}
             </div>
           </div>
           <button
@@ -92,7 +57,7 @@ const HotelCard = ({ data }: { data: BusinessItem }) => {
           </button>
         </div>
       </div>
-      <div className="hotel_right_details">
+      <Link className="hotel_right_details" href={`/productList/${data._id}`}>
         <h5 className="hotel_name">{data.businessName}</h5>
         <div className="start_rating">
           <img src="images/star.png" alt="" />
@@ -116,8 +81,8 @@ const HotelCard = ({ data }: { data: BusinessItem }) => {
             Chat
           </button>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

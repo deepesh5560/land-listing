@@ -10,7 +10,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
     `/home/businesses/${params.id}`
   );
 
-  if (!data.success) {
+  if (!success) {
     return (
       <div
         style={{
@@ -21,7 +21,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           justifyContent: "center",
         }}
       >
-        <h2>{data.message}</h2>
+        <h2>{error}</h2>
       </div>
     );
   }

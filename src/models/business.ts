@@ -7,7 +7,9 @@
     images: string[];
     isVerified: boolean;
     price: number;
-    facilities: any[];
+    facilities: string[];
+    yearOfEstablish:number;
+    paymentMode:string;
     geo: number[];
     _id: string;
     contacts: Contact[];

@@ -36,11 +36,11 @@ const Quickinfo = ({
               <div className="row">
                 <div className="col-md-6">
                   <span>Mode of Payment</span>
-                  <p>Cash/online</p>
+                  <p>{business.paymentMode ?? "Cash"}</p>
                 </div>
                 <div className="col-md-6">
                   <span>Year of Establishment</span>
-                  <p>2021</p>
+                  <p>{business.yearOfEstablish ?? 2024}</p>
                 </div>
               </div>
             </div>

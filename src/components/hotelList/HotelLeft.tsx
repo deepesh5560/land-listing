@@ -1,16 +1,23 @@
 import React from "react";
 import HotelCard from "./HotelCard";
 import CantFind from "./CantFind";
-import { BusinessItem } from "@/models/business";
 import HotelFilter from "./hotelFilter";
 import { cookies } from "next/headers";
 import Pagination, { PageInfo } from "./Pagination";
 
-const HotelLeft = ({ data, pageInfo }: { data: any[]; pageInfo: PageInfo }) => {
+interface Props {
+  data: any[];
+  pageInfo: PageInfo;
+  searchParams: { [key: string]: string | number };
+}
+
+const HotelLeft = ({ data, pageInfo, searchParams }: Props) => {
   const authToken = cookies().get("AUTH_TOKEN")?.value;
   return (
     <div className="col-md-8">
-      <h5 className="hotel_title">Best Hotels in Prickly Pear Island</h5>
+      <h5 className="hotel_title">
+        Best Hotels {!!searchParams?.location && `in ${searchParams.location}`}
+      </h5>
       <HotelFilter />
 
       <div className="hotel_row">

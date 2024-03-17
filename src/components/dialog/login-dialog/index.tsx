@@ -6,6 +6,8 @@ import OTPInput from "react-otp-input";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { countryList } from "@/lib/location";
+import { cookies } from "next/headers";
+import { clearAuthToken } from "@/lib/network-instance";
 
 const mobileRegex = /^\d{0,10}$/;
 
@@ -102,6 +104,12 @@ const LoginDialog = ({}: Props) => {
     setOTP(e);
   };
 
+  const onLogout = () => {
+    localStorage.clear();
+    clearAuthToken();
+    window.location.reload();
+  };
+
   useEffect(() => {
     setIsLoggedIn(() => (condition ? localStorage.getItem("LOGGED_IN") : ""));
   }, []);
@@ -111,13 +119,25 @@ const LoginDialog = ({}: Props) => {
       <li className="nav-item">
         <button
           onClick={toggle}
-          className="btn_login"
+          className="btn_login me-2"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
           {isLoggedIn ? "Profile" : "Login / sign Up"}
         </button>
       </li>
+      {isLoggedIn && (
+        <li className="nav-item">
+          <button
+            onClick={onLogout}
+            className="btn_login"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Log out
+          </button>
+        </li>
+      )}
       {open && (
         <div className="dialog-container">
           <dialog open={open} className="custom-dialog  modal_login ">

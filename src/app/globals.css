@@ -1294,9 +1294,13 @@ input#file {
     padding: 10px 20px;
     border: 0px;
     color: #fff;
+   
+}
+
+.relative{
+    position: relative;
     font-size: 20px;
     font-weight: 500;
 }
-
 
 

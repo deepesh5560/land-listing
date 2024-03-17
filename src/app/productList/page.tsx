@@ -7,12 +7,6 @@ export const dynamic = "force-dynamic";
 
 const pageSize = 10;
 
-// interface FilterParams {
-//   categoryId: string;
-//   isVerified: string;
-//   rating: string;
-// }
-
 const Page = async ({
   searchParams,
 }: {
@@ -56,9 +50,11 @@ const Page = async ({
         <div className="container">
           <nav className="--bs-breadcrumb" aria-label="breadcrumb">
             <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <a href="#">Prickly Pear island</a>
-              </li>
+              {!!searchParams.location && (
+                <li className="breadcrumb-item">
+                  <a href="#">{searchParams.location}</a>
+                </li>
+              )}
               <li className="breadcrumb-item active" aria-current="page">
                 Hotels
               </li>

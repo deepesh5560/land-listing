@@ -8,3 +8,13 @@ export function createQuery(params: { [key: string]: string | number }) {
     });
     return queryParams.join('&');
   }
+
+  export const getImageURL = (data:string | string[]) =>{
+    const base = process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0];
+    if(Array.isArray(data)){
+      return data.map((item)=>(base + "/" + item)) 
+    }
+
+    return (base +  "/" +  data);
+
+  }
