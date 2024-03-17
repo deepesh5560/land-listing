@@ -19,8 +19,10 @@ export async function networkInstance(method:methodType,url:string,payload?:any)
         cache:"no-store",
         headers: customHeaders,
     }).then(res=>res.json());
+    console.log("succcc")
       return { success: true, data: response, error: null };
     } catch (error: any) {
+      console.log("failed")
       return { success: false, error: error.message, data: null };
     }
   }

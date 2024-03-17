@@ -22,6 +22,10 @@ const OtpLogin = ({open,close, onNext,countryCode,mobileNumber}:{open:any,close:
       };
 
       const onVerifyOTPBtn = async () => {
+        if(otp !=='123456'){
+          toast.error('Invalid OTP');
+          return;
+        }
         const payload: any = {
           countryCode: countryCode,
           phoneNumber: mobileNumber,

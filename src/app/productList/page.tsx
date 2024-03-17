@@ -34,6 +34,7 @@ const Page = async ({
     `home/businesses?${query}`
   );
 
+
   if (!success || !data.success) {
     return (
       <div
@@ -49,7 +50,6 @@ const Page = async ({
       </div>
     );
   }
-
   return (
     <div>
       <section className="breadcrumb_section">

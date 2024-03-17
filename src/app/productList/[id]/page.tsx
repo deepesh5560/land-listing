@@ -9,6 +9,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
     "GET",
     `/home/businesses/${params.id}`
   );
+  
 
   if (!data.success) {
     return (

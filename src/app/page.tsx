@@ -7,7 +7,6 @@ export default function Home({
 }: {
   searchParams: { [key: string]: string | number };
 }) {
-  console.log(searchParams, "searchParams");
 
   return (
     <main>

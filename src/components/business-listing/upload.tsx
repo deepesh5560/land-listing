@@ -6,12 +6,10 @@ import toast from "react-hot-toast";
 const Upload = ({ onNext }: { onNext: () => void }) => {
   const [selectedImages, setSelectedImages] = useState<any>([]);
 useEffect(()=>{
-  console.log(selectedImages)
 },[selectedImages])
  // Function to handle file selection
 const handleImageChange = (e:any) => {
   const file = e.target.files[0];
-  console.log(e.target.files)
   if (file) {
     const reader = new FileReader();
     reader.onloadend = () => {

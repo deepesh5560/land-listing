@@ -8,7 +8,6 @@ const HotelDetail = ({
   data: { business: any; reviews: ReviewItem[] };
 }) => {
   const business: BusinessItem = data.business.business;
-
   const address = [
     business.buildingNo,
     business.address,
@@ -17,6 +16,7 @@ const HotelDetail = ({
     business.island,
     business.country,
   ].join(", ");
+
 
   return (
     <>

@@ -1,7 +1,6 @@
 "use client";
 import { networkInstance } from "@/lib/network-instance";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CategoryItem } from "../category/CategoryLeft";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {

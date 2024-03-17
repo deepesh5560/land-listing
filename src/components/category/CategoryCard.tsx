@@ -1,18 +1,16 @@
 "use client";
 
 import React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CategoryItem } from "./CategoryLeft";
 import Link from "next/link";
-import Image from "next/image";
-import { url } from "inspector";
+
 
 const CategoryCard = ({ detail }: { detail: CategoryItem }) => {
   const pic =
     process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
     "/" +
     detail.icon;
-
+   
   return (
     <Link
       href={`/productList?category=` + detail._id}

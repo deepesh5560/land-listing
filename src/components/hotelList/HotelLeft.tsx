@@ -14,9 +14,9 @@ const HotelLeft = ({ data, pageInfo }: { data: any[]; pageInfo: PageInfo }) => {
       <HotelFilter />
 
       <div className="hotel_row">
-        {data.map((item: any) => {
-          return <HotelCard data={item.business} key={item._id} />;
-        })}
+        {data.length?data.map((item: any) => {
+          return <HotelCard data={item.business} key={item._id} id={item._id} />;
+        }):<h1>No Business Found</h1>}
       </div>
 
       <Pagination pageInfo={pageInfo} />

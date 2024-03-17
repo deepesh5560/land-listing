@@ -3,7 +3,7 @@ import { BusinessItem } from "@/models/business";
 import Contact from "./contact";
 import Link from "next/link";
 
-const HotelCard = ({ data }: { data: BusinessItem }) => {
+const HotelCard = ({ data ,id}: { data: BusinessItem,id:string }) => {
   const address = [
     data?.buildingNo,
     data?.address,
@@ -12,9 +12,8 @@ const HotelCard = ({ data }: { data: BusinessItem }) => {
     data?.island,
     data?.country,
   ].join(", ");
-
   return (
-    <Link className="hotel_card" href={`/productList/${data._id}`}>
+    <Link className="hotel_card" href={`/productList/${id}`}>
       <div className="img_crousel">
         <div
           id="carouselExampleIndicators"

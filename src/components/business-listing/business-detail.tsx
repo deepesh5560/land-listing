@@ -1,5 +1,6 @@
 "use client";
 import { networkInstance } from "@/lib/network-instance";
+import next from "next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -48,19 +49,26 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
       country: detail.country,
       subDivision: detail.subdivision,
       island: detail.island,
+      website:"www.web.com",
+      facilities:["AC"],
+      yearOfEstablish:2011,
+      paymentMode:"online"
     };
     const { data, error, success } = await networkInstance(
       "POST",
       "businesses/store",
       payload
     );
+    console.log(data,"data<========")
     if (!success) {
       console.error(error, "error");
       toast.error(error);
       return;
+    }else{
+      onNext()
     }
-
-    onNext();
+    
+   
   };
 
   return (
