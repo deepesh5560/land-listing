@@ -10,14 +10,16 @@ const CategoryCard = ({ detail }: { detail: CategoryItem }) => {
     process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
     "/" +
     detail.icon;
+
+    console.log(pic,"<=========")
    
   return (
     <Link
       href={`/productList?category=` + detail._id}
       className="category_card items-center"
     >
-      <img alt="" height={60} className="card_icon" src={pic} />
-      <h5 className="cart-title-text">{detail.title}</h5>
+      <img alt="" height={60} className="card_icon" src={ detail.icon?pic :"images/hotel.png"} />
+      <h5 className="cart-title-text" style={{overflowWrap:"break-word",width:"100px"}}>{detail.title}</h5>
     </Link>
   );
 };
