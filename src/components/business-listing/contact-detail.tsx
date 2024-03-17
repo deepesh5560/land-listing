@@ -2,22 +2,17 @@
 import { networkInstance } from "@/lib/network-instance";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
+import { countryList } from "@/lib/location";
 
-const list = [
-  {
-    code: "AF",
-    dial_code: "+93",
-    flag: "🇦🇫",
-    name: "Afghanistan",
-  },
-];
+
+
 const mobileRegex = /^\d{0,10}$/;
 
-const initialData = {
+const initialData :any = {
   contactPerson: "",
   gender: "Mr.",
   mobileNumber: "",
-  countryCode: "",
+  countryCode: "+93s",
   email: "",
 };
 
@@ -34,6 +29,18 @@ const ContactDetail = ({ onNext }: { onNext: () => void }) => {
   };
 
   const onSubmit = async (e: any) => {
+ 
+    for ( let item in detail ) {
+      if ( detail[item] === "" ) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+      
+    }
+    if (detail.mobileNumber.length !== 10) {
+      toast.error("10 digit mobile number required");
+      return;
+    }
     const payload = {
       contactPersion: detail.contactPerson,
       gender: detail.gender === "Mr." ? "Male" : "Female",
@@ -95,10 +102,10 @@ const ContactDetail = ({ onNext }: { onNext: () => void }) => {
                       value={detail.countryCode}
                       onChange={onTextChange}
                     >
-                      {list.map((item, index) => {
+                      {countryList.map((item, index) => {
                         return (
-                          <option value={item.code} key={index} className="">
-                            <p>{item.code + " " + item.code}</p>
+                          <option value={item.dial_code} key={index} className="">
+                            <p>{item.code + " " + item.dial_code}</p>
                           </option>
                         );
                       })}

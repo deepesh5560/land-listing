@@ -1,15 +1,20 @@
 "use client";
 import { countryList } from "@/lib/location";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import toast from 'react-hot-toast';
+import OtpLogin from "./otpLogin";
+import { onSendOTP } from "../dialog/login-dialog/actions";
 
 const mobileRegex = /^\d{0,10}$/;
 
 const MobileDetail = ({ onNext }: { onNext: () => void }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState(countryList[0].dial_code);
+  const [open,setOPen]=useState(false);
 
   const onSubmit = async (e: any) => {
-    if (!mobileNumber.length) {
+    if (mobileNumber.length !== 10) {
+      toast.error('10 digit mobile number is required');
       return;
     }
     const payload: any = {
@@ -17,17 +22,16 @@ const MobileDetail = ({ onNext }: { onNext: () => void }) => {
       phoneNumber: mobileNumber,
       role: "business",
     };
+ 
 
-    onNext();
-    // const { data, error, success } = await onSendOTP(payload);
+    const { data, error, success } = await onSendOTP(payload);
+    if (success) {
+    setOPen(true)}
+   
 
-    // if (success) {
-    //   setOtpSent(true);
-    //   toast.success("OTP Sent");
-    // } else {
-    //   console.log(error, "error");
-    // }
   };
+
+ 
 
   const onCountryCodeSelect = (e: any) => {
     setCountryCode(e.target.value);
@@ -41,8 +45,10 @@ const MobileDetail = ({ onNext }: { onNext: () => void }) => {
   };
 
   return (
-    <>
-      <section className="business_free_section py-5">
+    <div>
+      {
+      open ? <OtpLogin open={open}  countryCode={countryCode} mobileNumber={mobileNumber} onNext={ onNext} close={setOPen}/>:(
+        <section className="business_free_section py-5">
         <div className="container">
           <div className="row">
             <div className="col-md-6">
@@ -65,7 +71,7 @@ const MobileDetail = ({ onNext }: { onNext: () => void }) => {
                       );
                     })}
                   </select>
-                  <input value={mobileNumber} onChange={onMobileNumberChange} />
+                  <input value={mobileNumber} onChange={onMobileNumberChange} maxLength={10} />
                   <button className="btn_submit" onClick={onSubmit}>
                     Submit
                   </button>
@@ -84,7 +90,11 @@ const MobileDetail = ({ onNext }: { onNext: () => void }) => {
           </div>
         </div>
       </section>
-    </>
+      )
+    }
+    </div>
+     
+   
   );
 };
 
