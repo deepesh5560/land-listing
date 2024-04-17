@@ -1,9 +1,24 @@
+'use client'
+
 import React from "react";
 import { BusinessItem } from "@/models/business";
 import Contact from "./contact";
 import Link from "next/link";
+import Image from "next/image";
+import FilledStar from "../../../public//images/filled-star.svg";
+import Star from "../../../public/images/star.svg";
+import { Carousel } from "react-bootstrap";
 
-const HotelCard = ({ data ,id}: { data: BusinessItem,id:string }) => {
+const HotelCard = ({
+  data,
+  id,
+  rating,
+}: {
+  data: BusinessItem;
+  id: string;
+  rating: { avgRating: number; totalRating: number };
+}) => {
+
   const address = [
     data?.buildingNo,
     data?.address,
@@ -12,90 +27,64 @@ const HotelCard = ({ data ,id}: { data: BusinessItem,id:string }) => {
     data?.island,
     data?.country,
   ].join(", ");
+
+  const star: number[] = [];
+  const maxRate = Math.ceil(rating.totalRating);
+  for (let index = 0; index < 5; index++) {
+    if (index <= maxRate - 1) {
+      star.push(1);
+    } else {
+      star.push(0);
+    }
+  }
   return (
-    <Link className="hotel_card" href={`/productList/${id}`}>
+    <div  key={id}>
+      <Link className="hotel_card"  href={`/productList/${id}`}>
       <div className="img_crousel">
-        <div
-          id="carouselExampleIndicators"
-          className="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div className="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
+   
+{data?.images?.length ? <Carousel>
+        {data?.images?.map((imgData, i) => {
+              const pic =
+              process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
+              "/" +
+              imgData;
+
+              return   <Carousel.Item key={i+'x'}>     
+            <img
+              src={pic}
+              alt={`Slide ${i + 1}`}
+              width={265}
+            />
+          </Carousel.Item> 
+      
+})}
+      </Carousel>:(
+            <div >
+            <img
+              width={265}
+              alt="..."
+              src={"images/slider1.png"}
+            />
           </div>
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img
-                src="images/slider1.png"
-                className="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/slider1.png"
-                className="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/slider1.png"
-                className="d-block w-100"
-                alt="..."
-              />
-            </div>
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+      )}
+
       </div>
       <div className="hotel_right_details">
         <h5 className="hotel_name">{data.businessName}</h5>
         <div className="start_rating">
-          <img src="images/star.png" alt="" />
-          <span>319 rating</span>
+          {star &&
+            star.map((num, i) => {
+              return (
+                <Image
+                  src={num === 1 ? FilledStar : Star}
+                  height={20}
+                  alt="Rating Star"
+                  style={{ marginRight: "2px" }}
+                  key={i}
+                />
+              );
+            })}
+          <span>{rating?.totalRating} rating</span>
         </div>
 
         {data.isVerified && (
@@ -109,14 +98,15 @@ const HotelCard = ({ data ,id}: { data: BusinessItem,id:string }) => {
           {address}
         </p>
         <div className="btn_connecting">
-          <Contact contact={data.contacts[0]} />
+          <Contact key={id} contact={data.contacts?.[0]} />
           <button className="btn_chat">
             <img className="me-2" src="images/logos_whatsapp-icon.png" alt="" />
             Chat
           </button>
         </div>
       </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

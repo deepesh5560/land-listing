@@ -19,7 +19,7 @@ const initialData = {
   checkOut: "",
 };
 
-const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
+const BusinessTimings = ({ onNext,setIsloading }: { onNext: () => void,setIsloading:any }) => {
   const [detail, setDetail] = useState(initialData);
 
   const onTextChange = (e: any) => {
@@ -52,13 +52,13 @@ const BusinessTimings = ({ onNext }: { onNext: () => void }) => {
         return;
       }
     
-
+      setIsloading(true)
     const { data, error, success } = await networkInstance(
       "POST",
       "businesses/timing",
       payload
     );
-
+    setIsloading(false)
     if (!success) {
       toast.error(error);
       return;

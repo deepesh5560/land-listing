@@ -64,6 +64,9 @@ const HotelFilter = () => {
               <option value={"4"} className="rating-option">
                 4
               </option>
+              <option value={"5"} className="rating-option">
+                5
+              </option>
             </select>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>

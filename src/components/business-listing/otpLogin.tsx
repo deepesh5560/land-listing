@@ -3,6 +3,8 @@ import React, {  useState } from 'react'
 import OTPInput from 'react-otp-input'
 import { onVerifyOTP } from '../dialog/login-dialog/actions';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { setRole } from '@/lib/serverActions';
 
 interface AuthResponse {
     success: boolean;
@@ -15,7 +17,7 @@ const OtpLogin = ({open,close, onNext,countryCode,mobileNumber}:{open:any,close:
   const [otp, setOTP] = useState("");
   const condition = typeof window !== "undefined";
 
-
+ const Router =useRouter()
 
     const onOTPChange = (e: any) => {
         setOTP(e);
@@ -36,7 +38,15 @@ const OtpLogin = ({open,close, onNext,countryCode,mobileNumber}:{open:any,close:
         if (success) {
           let { accessToken, message }: AuthResponse = data;
           localStorage.setItem("LOGGED_IN", accessToken);
+          localStorage.setItem("role", data.user.role);
           close(false)
+          setRole(data.user.role)
+          if ((data.user.role === 'business' && data.user?.business?.address)|| data.user.role === 'user'  ) {
+
+          Router.push('/user/profile')
+          return;
+            
+          }
 
           onNext()
           if(condition){

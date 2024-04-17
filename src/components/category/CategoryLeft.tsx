@@ -41,7 +41,9 @@ const CategoryLeft = async ({
         <div className="category_section">
           {data?.data.length?
             [...data.data].map((item: CategoryItem) => {
-              return <CategoryCard detail={item} key={item._id} />;
+              return <>{
+                item?.title && <CategoryCard detail={item} key={item._id} />
+              }</>;
             }):<h1>No business found</h1>}
 
           {data?.meta.total_records - data?.data.length >= 1 && (

@@ -3,24 +3,24 @@ import { networkInstance } from "@/lib/network-instance";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
-  const [categories, setCategories] = useState([]);
+const AddBusinessCategory = ({ onNext,setIsloading }: { onNext: () => void , setIsloading:any}) => {
+  const [categories, setCategories] = useState<any[]>([]);
 
   const onSubmit = async (e: any) => {
-    const payload = {
-      category:  categories.find((category: any) => category.selected) || "",
+    const payload:any = {
+      category:  categories.find((category: any) => category.selected)?._id || "",
     };
     if(!payload?.category){
       toast.error('Select a category!')
       return;
     }
-
+    setIsloading(true)
     const { data, error, success } = await networkInstance(
       "POST",
       "businesses/category",
       payload
     );
-
+    setIsloading(false)
     if (!success) {
       toast.error(error);
       return;
@@ -72,7 +72,11 @@ const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
                 <div className="industry_category">
                   <div className="category_section">
                     {!!categories?.length &&
-                      categories.map((item: any, index: number) => {
+                      categories.map((item: any) => {
+                        const pic =
+    process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
+    "/" +
+    item.icon;
                         return (
                           <div
                             className="category_card"
@@ -84,15 +88,15 @@ const AddBusinessCategory = ({ onNext }: { onNext: () => void }) => {
                                 : "white",
                             }}
                           >
-                            <img className="card_icon" src="images/hotel.png" />
-                            <h5 className="card_title">Category {index + 1}</h5>
+                            <img height={60}  width={60} className="card_icon" src={item.icon?pic:"images/hotel.png"} />
+                            <h5 style={{wordBreak:"break-all"}} className="card_title">{item.title}</h5>
                           </div>
                         );
                       })}
                   </div>
                 </div>
                   <div className="btn_form">
-                    <button className="btn_skip" onClick={()=>onNext()}>Skip</button>
+                    <button className="btn_skip me-2" onClick={()=>onNext()}>Skip</button>
                     <button onClick={onSubmit}>Save & Continue</button>
                   </div>
                 </div>

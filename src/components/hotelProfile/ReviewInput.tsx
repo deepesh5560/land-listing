@@ -5,15 +5,18 @@ import React, { useState } from "react";
 import FilledStar from "../../../public/images/filled-star.svg";
 import Star from "../../../public/images/star.svg";
 import { useRouter } from "next/navigation";
-import Router from "next/router";
 import toast from "react-hot-toast";
+import { AnyCnameRecord } from "dns";
 
-const ReviewInput = ({ businessId }: { businessId: string }) => {
+const ReviewInput = ({ businessId,setAddreview,busdata,addReview }: { businessId: string,setAddreview:React.Dispatch<React.SetStateAction<any[]>> ,busdata:any,addReview:any}) => {
   const router = useRouter();
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(0);
-
+  const [rating, setRating] = useState(1);
   const onSubmit = async () => {
+    if(!review){
+      toast.error("Add review");
+      return
+    }
     const { success, error, data } = await networkInstance(
       "POST",
       `home/businesses/${businessId}/reviews`,
@@ -25,10 +28,14 @@ const ReviewInput = ({ businessId }: { businessId: string }) => {
     if (!success) {
       toast.error("Please login to post a review");
       return;
+    }else{
+      toast.success(data?.message)
+      setAddreview((prev)=>[...prev,{...data?.data}])
+      setReview('')
     }
     // toast.success(data.message);
-    Router.reload();
   };
+
 
   const onRatingSelect = (index: number) => {
     setRating(index);
@@ -39,9 +46,9 @@ const ReviewInput = ({ businessId }: { businessId: string }) => {
       <div className="row pb-4">
         <div className="col-md-8">
           <div className="rating_block">
-            <span className="total_rating">4.4</span>
+            <span className="total_rating">{busdata?.avgRating? parseFloat(busdata?.avgRating).toFixed(1) : 0}</span>
             <div className="rating_number">
-              <h5>146 Ratings</h5>
+              <h5>{addReview?.length || 0} Ratings</h5>
               <p>Total number of rating across the web</p>
             </div>
           </div>

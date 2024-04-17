@@ -1,30 +1,65 @@
-export const dynamic = "force-dynamic";
+'use client'
 
-import React from "react";
+import React, { useEffect,useState } from "react";
 import ReviewCards from "./ReviewCards";
 import { BusinessItem, ReviewItem } from "@/models/business";
 import ReviewInput from "./ReviewInput";
-import { cookies } from "next/headers";
+
+
 
 const Quickinfo = ({
   data,
+  busId
 }: {
   data: { business: any; reviews: ReviewItem[] };
+  busId:string
 }) => {
-  const authToken = cookies().get("AUTH_TOKEN")?.value;
-
-  const business: BusinessItem = data.business.business;
-
   const reviews = data.reviews;
 
+  const [addReview,setAddreview]=useState<any[]>([...reviews])
+  const [token,setToken]=useState<any>('')
+  const condition = typeof window !== "undefined";
+  const business: BusinessItem = data.business.business;
+  const [images,setimages]=useState<any[]>([...business.images])
+  const [isOverflow,setisOverflow]=useState<any>(false)
+
   const address = [
-    business.buildingNo,
-    business.address,
-    business.area,
-    business.landmark,
-    business.island,
-    business.country,
+    business?.buildingNo,
+    business?.address,
+    business?.area,
+    business?.landmark,
+    business?.island,
+    business?.country,
   ].join(", ");
+
+  
+
+  useEffect(() => {
+    
+    setToken(()=>condition ? localStorage.getItem('LOGGED_IN'):'')
+
+  
+  }, [])
+
+  useEffect(()=>{
+    
+    const container:any =window.document.getElementById('photo-block')
+
+    if (container.scrollWidth > container.clientWidth ) {
+      setisOverflow(true)
+    }else{
+      setisOverflow(false)
+
+    }
+  },[images])
+  
+  const rotateLeft = () =>{
+    let  newArr=  images
+    const firstElement = newArr.shift(); // Remove the first element and store it
+    newArr.push(firstElement); // Add the removed element to the end
+    setimages([...newArr])
+ 
+  }
 
   return (
     <section className="information_block">
@@ -36,32 +71,30 @@ const Quickinfo = ({
               <div className="row">
                 <div className="col-md-6">
                   <span>Mode of Payment</span>
-                  <p>Cash/online</p>
+                  <p>{business.paymentMode}</p>
                 </div>
                 <div className="col-md-6">
                   <span>Year of Establishment</span>
-                  <p>2021</p>
+                  <p>{business.yearOfEstablish}</p>
                 </div>
               </div>
             </div>
 
             <div className="facilities_timing_complimentary">
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-5 faclities">
                   <h5>Facilities</h5>
-                  {business.facilities.map((item, index) => {
+                  {business?.facilities.map((item, index) => {
                     return <p key={index}>{item}</p>;
                   })}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 faclities">
                   <h5>Timing</h5>
-                  {business.workingTime.map((item, index) => {
-                    return <p key={index}>{item}</p>;
-                  })}
-                  {/* <p>Check In-12:00 PM</p>
-                  <p>Check Out-11:00 AM</p> */}
+               
+                  <p>Check In-{business?.workingTime[0]} PM</p>
+                  <p>Check Out-{business?.workingTime[1]} AM</p>
                 </div>
-                <div className="col-md-4 text-right">
+                <div className="col-md-4 text-right faclities">
                   <h5>Complimentary</h5>
                   <p>Complimentary Breakfast</p>
                 </div>
@@ -73,20 +106,34 @@ const Quickinfo = ({
 
             <div className="photos_block">
               <h4 className="h4_title">Photos</h4>
+                
+                <div id="photo-block" style={{display:'flex',gap:"40px",maxWidth:"960px",overflow:"scroll"}}>
+                  {images.map((image,index) =>{
+                          const pic =
+                          process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
+                          "/" +
+                          image;
+                    return <div key={index} id={`photos_block_${index}`} className="photos_info" ><img src={pic} width={180} height={120} alt="" /></div>
+                  })}
+                  
+                 <div  className="next-pic-btn"> {isOverflow&&<div className="next-pic-btn2" onClick={()=>rotateLeft()}><img   src="/images/next.png" alt="" /></div>}</div>
+                </div>
+
+
             </div>
 
             <div className="review_block pt-4">
-              {!!authToken?.length && (
+              {token && (
                 <>
                   <h4 className="h4_title pb-4">Reviews & Ratings</h4>
-                  <ReviewInput businessId={business._id} />
+                  <ReviewInput businessId={busId} setAddreview={setAddreview} addReview={addReview} busdata={data} />
                 </>
               )}
 
               <h4 className="h4_title py-4">User Review</h4>
 
               <div className="user_review_block">
-                {reviews.map((item) => {
+                { addReview && addReview.map((item) => {
                   return <ReviewCards review={item} key={item._id} />;
                 })}
               </div>
@@ -95,7 +142,7 @@ const Quickinfo = ({
           <div className="col-md-3 right">
             <div className="hotel_address">
               <div className="site_name">
-                <span>www.hotelstaywell.com </span>
+                <span>{business.website}</span>
                 <a href="#" className="copy_here">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

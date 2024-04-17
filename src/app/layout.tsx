@@ -5,6 +5,9 @@ import Header from "@/components/header/header";
 import "bootstrap/dist/css/bootstrap.css";
 import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
+import Loader from "@/models/loader";
+// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+// import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+       <head>
+          {/* Bootstrap CSS CDN link */}
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous"/>
+        </head>
       <body className={inter.className}>
         <Header />
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+       
+        <Suspense fallback={<Loader/>}>{children}</Suspense>
         <Toaster
           position="top-right"
           reverseOrder={true}

@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap');
 
+/* @import url("../core.min.css"); */
 body {
     font-family: 'Work Sans', sans-serif;
     color: #121212;
 }
 
 .btn_login {
+    border: 0px;
     background-color: #23094E;
     border-radius: 30px;
     padding: 10px 25px;
@@ -13,6 +15,9 @@ body {
     color: #C3FF23;
     text-decoration: none;
     transition: 0.3s;
+}
+a{
+    text-decoration: none !important;
 }
 .btn_login:hover{
      background-color: #000;
@@ -111,6 +116,12 @@ button.btn_location {
     border-radius: 5px;
     margin-bottom: 20px;
     cursor: pointer;
+    background-color: transparent;
+}
+.category_card img{
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
 }
 .category_card.active{
     background-color: #23094e
@@ -201,11 +212,12 @@ section.recent_activity .container h3 {
 }
 
 .activity_card .activity_img {
-    padding: 10px 0px;
+    padding: 20px 0px;
 }
 
 .activity_card .activity_img img {
     width: 100%;
+    object-fit: cover;
 }
 
 .bottom_activity .name_img {
@@ -231,6 +243,7 @@ section.recent_activity .container h3 {
     font-size: 16px;
     font-weight: 400;
     letter-spacing: -0.288px;
+    cursor: pointer;
 }
 
 button.load_more {
@@ -378,8 +391,12 @@ a.btn_number {
     border: 1px solid #23094E;
     color: #fff;
     text-decoration: none;
+    cursor: pointer;
 }
 
+a.btn_number:hover{
+    color: #fff;
+}
 button.btn_chat {
     padding: 8px 15px;
     border-radius: 30px;
@@ -480,8 +497,13 @@ section.gallery_images .container .row {
 
 section.gallery_images .container .row .right img {
     height: 225.5px;
+    width: 100%;
+    object-fit: cover;
 }
-
+section.gallery_images .left img.img-fluid {
+    height: 451px;
+    object-fit: cover;
+}
 .show_all_photos {
     position: absolute;
     right: 35px;
@@ -515,6 +537,12 @@ section.gallery_images .container .row .right img {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: -0.252px;
+    margin: 0px 5px;
+}
+.btn_connecting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .right_star span.day_night {
     border-radius: 30px;
@@ -755,7 +783,7 @@ section.about_hotel_block {
     color: #fff;
     font-size: 20px;
     font-weight: 500;
-    /* padding: 7px; */
+    padding: 7px;
 }
 .modal_login 
  + .modal-backdrop.fade.show,
@@ -768,6 +796,9 @@ section.about_hotel_block {
     outline: 0;
 }
 /* modal */
+.btn-close:hover{
+    color: #fff !important;
+}
 .h3_title{
 color:  #23094E;
 font-size: 32px;
@@ -780,7 +811,9 @@ font-size: 16px;
 font-weight: 500;
 letter-spacing: -0.288px;
 }
-
+ul.navbar-nav.ms-auto li.nav-item {
+    margin-left: 10px;
+}
 /* custom_form */
 .custom_form .form-outline .form-control:focus{
     border-color: #23094E;
@@ -807,7 +840,7 @@ letter-spacing: -0.288px;
 }
 
 .custom_form .form-outline {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .custom_form .form-outline input.form-control {
@@ -1299,4 +1332,193 @@ input#file {
 }
 
 
+::-webkit-scrollbar {
+    width: 0px;
+  }
 
+  .photos_info{
+    position: static;
+  }
+
+  .photos_block{
+    position: relative;
+  }
+
+  .next-pic-btn{position: absolute;
+    right: 10px ;
+  
+    display: flex;
+    align-items: center;
+    height: 120px;
+
+  }
+  .next-pic-btn2{
+    background-color: white;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+
+  /* ---- */
+  .form-outline {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.form-outline label.form-label {
+    order: 0;
+}
+
+.form-outline input.form-control {
+    order: 1;
+}
+.row_form.custom_2 .small_input.select_custom {
+    padding-top: 45px;
+}
+
+.steps.step_1.stp3.pb-3 .row_3 .small_input {
+    padding-top: 45px;
+    width: 20%;
+}
+@media (max-width:767px) {
+    header.custom_header.header1 div#navbarNavDropdown.show {
+        display: block;
+        background: #fff;
+        border: 1px solid #000 !important;
+        display: block;
+        background: #fff;
+        border: 1px solid;
+        padding: 10px;
+    }
+    header.custom_header.header1 div#navbarNavDropdown.show  li.nav-item{
+      margin-bottom: 10px;
+    }
+    .business_section h2, .business_section h1 {
+        color: #23094E;
+        font-size: 20px;
+        line-height: 30.23px;
+    }
+    .location_based_search{
+        flex-wrap: wrap;
+    }
+    .location_based_search .location_div, .location_based_search .search_div{
+        width: 100%;
+    }
+    .location_based_search .location_div  button.btn_location{
+        width: 100%;
+        text-align: left;
+    }
+    .category_section{
+        flex-wrap: wrap;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .category_card{
+        width: 49%;
+        margin-bottom: 10px;
+    }
+    .right_block .col-md-6 {
+        margin-bottom: 10px;
+        width: 50%;
+    }
+    .search_card {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+    section.recent_activity {
+        padding: 0px 15px;
+    }
+    .hotel_title {
+        color: #000;
+        font-size: 18px;
+        font-weight: 500;
+        padding-bottom: 10px;
+    }
+    .hotel_card,.can_not_find,.days_of_week{
+        flex-wrap: wrap;
+    }
+    .hotel_card .img_crousel {
+        width: 100%;
+    }
+    .can_not_find{
+        gap: 10px;
+    }
+    .h3_title {
+        font-size: 20px;
+        padding-bottom: 20px;
+    }
+    section.business_details_section.py-5 .container > .row ,
+    section.business_free_section.py-5 .container .row{
+        flex-direction: column-reverse;
+    }
+    .multi_step_wrapper .steps{
+        width: 100%;
+        padding: 10px;
+    }
+    .row_form .small_input {
+        width: 27%;
+    }
+    .custom_form .form-outline {
+        margin-bottom: 15px;
+        flex: 1;
+    }
+    .btn_form button {
+        padding: 15px 10px;
+        font-size: 15px;
+    }
+    .select_custom{
+        margin-bottom: 15px;
+    }
+    .days_of_week .input_weak label {
+        font-size: 20px;
+        left: 53%;
+        top: 28%;
+    }
+    .custom_upload_file{
+        margin: auto;
+    }
+    .row.step_4.pb-3 {
+        gap: 25px;
+    }
+    .btn_connecting{
+        padding-bottom: 20px;
+    }
+    .about_hotel,.btn_connecting{
+        flex-wrap: wrap;
+    }
+    .faclities{
+        display: flex;
+        gap: 10px;
+    }
+    section.gallery_images .col-md-6.right.ps-0 {
+        padding-left: 12px !important;
+        padding-right: 0px;
+    }
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.btn_number a{
+    transition: width 2s, height 0s;
+}
+
+.trashIMG{
+    cursor: pointer;
+    position: absolute;
+}

@@ -11,7 +11,7 @@ export default function Home({
   return (
     <main>
       <Category searchParams={searchParams} />
-      <PopularMain />
+      {/* <PopularMain /> */}
       <RecentMain />
     </main>
   );

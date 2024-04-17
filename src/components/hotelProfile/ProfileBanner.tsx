@@ -3,8 +3,10 @@ import React from "react";
 
 const ProfileBanner = ({
   data,
+  setisBanner
 }: {
   data: { business: any; reviews: ReviewItem[] };
+  setisBanner:any
 }) => {
   const pics = data.business?.business?.images.map((item: string) => {
     const pic =
@@ -13,7 +15,7 @@ const ProfileBanner = ({
   });
   return (
     <>
-      <section className="breadcrumb_section">
+      {/* <section className="breadcrumb_section">
         <div className="container">
           <nav className="--bs-breadcrumb" aria-label="breadcrumb">
             <ol className="breadcrumb">
@@ -29,14 +31,14 @@ const ProfileBanner = ({
             </ol>
           </nav>
         </div>
-      </section>
+      </section> */}
 
       <section className="gallery_images">
         <div className="container">
           <div className="row">
             <div className="col-md-6 left pe-0">
               <img
-                src={pics[0] ?? "/images/gallery1.jpg"}
+                src={(pics && pics?.[0]) ?? "/images/gallery1.jpg"}
                 className="img-fluid"
                 style={{ backgroundColor: "pink" }}
                 alt=""
@@ -45,19 +47,19 @@ const ProfileBanner = ({
             </div>
             <div className="col-md-6 right ps-0">
               <img
-                src={pics[1] ?? "/images/Image-3.jpg"}
+                src={pics?.[1] ?? "/images/Image-3.jpg"}
                 className="img-fluid"
                 alt=""
               />
               <img
-                src={pics[2] ?? "/images/image-2.jpg"}
+                src={pics?.[2] ?? "/images/image-2.jpg"}
                 className="img-fluid"
                 alt=""
               />
             </div>
-            {!!pics[3] && (
+            {!!pics?.[3] && (
               <div className="show_all_photos">
-                <button>Show all Photos</button>
+                <button onClick={()=>setisBanner(true)}>Show all Photos</button>
               </div>
             )}
           </div>

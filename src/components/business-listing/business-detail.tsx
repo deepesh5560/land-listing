@@ -1,5 +1,6 @@
 "use client";
 import { networkInstance } from "@/lib/network-instance";
+import useStore from "@/store/loadingState";
 import next from "next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
@@ -18,8 +19,9 @@ const initialData:any = {
 
 const postalRegex = /^\d{0,10}$/;
 
-const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
+const BusinessDetail = ({ onNext,setIsloading }: { onNext: () => void,setIsloading:any }) => {
   const [detail, setDetail] = useState(initialData);
+
 
   const onTextChange = (e: any) => {
     const { name, value } = e.target;
@@ -51,21 +53,26 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
       island: detail.island,
       website:"www.web.com",
       facilities:["AC"],
-      yearOfEstablish:2011,
-      paymentMode:"online"
     };
+    setIsloading(true)
     const { data, error, success } = await networkInstance(
       "POST",
       "businesses/store",
       payload
     );
-    console.log(data,"data<========")
+
+    setIsloading(false)
     if (!success) {
       console.error(error, "error");
       toast.error(error);
       return;
     }else{
-      onNext()
+      if(!data.success){
+        toast.error('oops something went wrong');
+      }else{
+        onNext()
+
+      }
     }
     
    
@@ -93,7 +100,7 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
                 </div>
                 <div className="form-outline">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     value={detail.postalCode}
                     name="postalCode"
@@ -163,6 +170,7 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
                     Country
                   </label>
                 </div>
+               
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-outline">
@@ -193,6 +201,8 @@ const BusinessDetail = ({ onNext }: { onNext: () => void }) => {
                     </div>
                   </div>
                 </div>
+               
+             
 
                 <div className="btn_form">
                   <button className="" onClick={onSubmit}>

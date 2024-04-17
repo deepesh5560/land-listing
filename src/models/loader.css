@@ -1,0 +1,21 @@
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .loader-image {
+    width: 50px; /* Adjust the width and height as needed */
+    height: 50px;
+    animation: zoomAnimation 1s ease infinite;
+
+  }
+  @keyframes zoomAnimation {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(2.5);
+    }
+  }

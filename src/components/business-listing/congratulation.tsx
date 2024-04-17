@@ -1,11 +1,14 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction } from "react";
 
 const Congratulations = ({ onNext }: { onNext: () => void }) => {
+  const Router = useRouter()
   const onSubmit = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem("BUSINESS_LIST_ACTIVE_SECTION", "0");
     }
+    Router.push('/user/profile')
   };
 
   return (

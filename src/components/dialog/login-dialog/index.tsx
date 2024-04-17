@@ -6,6 +6,7 @@ import OTPInput from "react-otp-input";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { countryList } from "@/lib/location";
+import { setRole } from "@/lib/serverActions";
 
 const mobileRegex = /^\d{0,10}$/;
 
@@ -38,9 +39,10 @@ const LoginDialog = ({}: Props) => {
   const [otp, setOTP] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<string | null>("");
+  const Auth =condition ? localStorage.getItem("LOGGED_IN") : ""
 
   const toggle = () => {
-    if (!!isLoggedIn) {
+    if (isLoggedIn) {
       router.push("/user/profile");
       return;
     }
@@ -53,6 +55,10 @@ const LoginDialog = ({}: Props) => {
   };
 
   const onVerifyOTPBtn = async (e: any) => {
+    if(otp !=='123456'){
+      toast.error('Invalid OTP');
+      return;
+    }
     const payload: any = {
       countryCode: countryCode,
       phoneNumber: mobileNumber,
@@ -61,8 +67,10 @@ const LoginDialog = ({}: Props) => {
 
     const { success, data, error } = await onVerifyOTP(payload);
     if (success) {
-      let { accessToken, message }: AuthResponse = data;
+      let { accessToken, message ,user }: AuthResponse = data;
       localStorage.setItem("LOGGED_IN", accessToken);
+      localStorage.setItem("role", user?.role);
+      setRole(user?.role|| '')
       setIsLoggedIn(accessToken);
       toggle();
       toast.success(message);
@@ -104,7 +112,7 @@ const LoginDialog = ({}: Props) => {
 
   useEffect(() => {
     setIsLoggedIn(() => (condition ? localStorage.getItem("LOGGED_IN") : ""));
-  }, []);
+  }, [Auth]);
 
   return (
     <>

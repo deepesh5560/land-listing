@@ -1,9 +1,10 @@
 "use server"
 import { cookies } from "next/headers";
 
-type methodType = "GET" |  "POST"
+type methodType = "GET" |  "POST" | "PUT" 
 
 export async function networkInstance(method:methodType,url:string,payload?:any) {
+
   const authToken =  cookies().get("AUTH_TOKEN")?.value;
 
     try {
@@ -19,10 +20,9 @@ export async function networkInstance(method:methodType,url:string,payload?:any)
         cache:"no-store",
         headers: customHeaders,
     }).then(res=>res.json());
-    console.log("succcc")
+
       return { success: true, data: response, error: null };
     } catch (error: any) {
-      console.log("failed")
       return { success: false, error: error.message, data: null };
     }
   }

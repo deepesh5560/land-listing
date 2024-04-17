@@ -1,6 +1,9 @@
+'use client'
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const CantFind = () => {
+  const Router = useRouter()
   return (
     <div className="can_not_find">
       <div className="text_img">
@@ -10,9 +13,9 @@ const CantFind = () => {
           <p>Add businesses at Land Listing for free</p>
         </div>
       </div>
-      <a href="#" className="btn_bussiness btn_login">
+      <div onClick={()=>Router.push('/business-listing')} className="btn_bussiness btn_login">
         Add Business
-      </a>
+      </div>
     </div>
   );
 };

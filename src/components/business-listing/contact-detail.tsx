@@ -16,7 +16,7 @@ const initialData :any = {
   email: "",
 };
 
-const ContactDetail = ({ onNext }: { onNext: () => void }) => {
+const ContactDetail = ({ onNext,setIsloading }: { onNext: () => void ,setIsloading:any}) => {
   const [detail, setDetail] = useState(initialData);
 
   const onTextChange = (e: any) => {
@@ -50,13 +50,13 @@ const ContactDetail = ({ onNext }: { onNext: () => void }) => {
       },
       email: detail.email,
     };
-
+    setIsloading(true)
     const { data, error, success } = await networkInstance(
       "POST",
       "businesses/contactDetails",
       payload
     );
-
+    setIsloading(false)
     if (!success) {
       toast.error(error);
       return;
@@ -69,19 +69,19 @@ const ContactDetail = ({ onNext }: { onNext: () => void }) => {
       <section className="mult-step_section py-5">
         <div className="container">
           <div className="multi_step_wrapper">
-            <div className="steps step_1 pb-3">
+            <div className="steps step_1 stp3 pb-3">
               <img className="step_img" src="images/step1.png" alt="" />
               <h3 className="h3_title">Add contact Details</h3>
               <div className="custom_form">
                 <div className="row_form">
-                  <div className="small_input select_custom">
+                  {/* <div className="small_input select_custom">
                     <label>Title</label>
 
                     <select name="gender" value={detail.gender}>
                       <option value="Mr.">Mr.</option>
                       <option value="Mrs.">Mrs.</option>
                     </select>
-                  </div>
+                  </div> */}
                   <div className="form-outline">
                     <input
                       type="text"
@@ -95,7 +95,7 @@ const ContactDetail = ({ onNext }: { onNext: () => void }) => {
                     </label>
                   </div>
                 </div>
-                <div className="row_form">
+                <div className="row_form row_3">
                   <div className="small_input">
                     <select
                       name="countryCode"

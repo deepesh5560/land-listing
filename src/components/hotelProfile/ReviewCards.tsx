@@ -9,15 +9,17 @@ const ReviewCards = ({ review }: { review: ReviewItem }) => {
   const pic =
     process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
     "/" +
-    review.user.avatar;
+    review?.user?.avatar;
 
   return (
-    <div className="user_review_card">
+    <div className="user_review_card" key={review?._id}>
       <div className="card_head">
         <div className="profile_img_name">
-          <img src={review.user.avatar ? pic : "/images/user.png"} alt="" />
+         <div>
+         <div><img src={review?.user?.avatar ? pic : "/images/user.png"} alt="" /></div>
+          </div>        
           <div className="name_star">
-            <span>{review.user.name}</span>
+            <span>{review.user.name || "Guest"}</span>
             {[...new Array(5)].map((_, index) => {
               return (
                 <Image
@@ -33,11 +35,11 @@ const ReviewCards = ({ review }: { review: ReviewItem }) => {
           </div>
         </div>
         <span className="date">
-          {format(new Date(review.updatedAt), "dd MMM yyyy")}
+          {format(new Date(review?.updatedAt), "dd MMM yyyy")}
         </span>
       </div>
       <div className="card_text">
-        <p>{review.review}</p>
+        <p>{review?.review}</p>
       </div>
     </div>
   );

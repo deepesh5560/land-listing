@@ -1,8 +1,8 @@
-import HotelDetail from "@/components/hotelProfile/HotelDetail";
-import ProfileBanner from "@/components/hotelProfile/ProfileBanner";
-import Quickinfo from "@/components/hotelProfile/quickinfo";
+
 import { networkInstance } from "@/lib/network-instance";
 import React from "react";
+
+import ProfoleMain from "@/components/hotelProfile/ProfoleMain";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { data, error, success } = await networkInstance(
@@ -11,7 +11,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   );
   
 
-  if (!data.success) {
+  if (!data?.success) {
     return (
       <div
         style={{
@@ -22,16 +22,16 @@ const Page = async ({ params }: { params: { id: string } }) => {
           justifyContent: "center",
         }}
       >
-        <h2>{data.message}</h2>
+        <h2>{data?.message}</h2>
       </div>
     );
   }
 
   return (
     <>
-      <ProfileBanner data={data.data} />
-      <HotelDetail data={data.data} />
-      <Quickinfo data={data.data} />
+   
+   <ProfoleMain params={params} data={data}/>
+     
     </>
   );
 };

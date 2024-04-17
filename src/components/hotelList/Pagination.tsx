@@ -17,7 +17,7 @@ const Pagination = ({ pageInfo }: { pageInfo: PageInfo }) => {
   const { replace } = useRouter();
 
   useEffect(() => {
-    setArr([...new Array(pageInfo.total_pages)]);
+    setArr([...new Array(pageInfo.total_pages)].fill(1));
   }, [current]);
 
   const onPageSelect = (index: number) => {

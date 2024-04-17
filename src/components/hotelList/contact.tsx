@@ -1,18 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
-const Contact = ({ contact }: { contact: any }) => {
+const Contact = ({ contact}: { contact: any }) => {
+  const [num, setnum] = useState<any>()
+
+ 
   return (
     <>
-      <Tooltip anchorSelect=".contact-anchor" place="top">
-        {contact.countryCode + " " + contact.contact}
-      </Tooltip>
+   <div onMouseEnter={()=>setnum(true)} onMouseLeave={()=>setnum(false)}>
+
       <a className={`btn_number contact-anchor`}>
         <img className="me-2" src="images/phn.png" alt="" />
-        Show Number
+        {num && contact?.contact?(contact?.countryCode|| '') + " " +( contact?.contact || ''):"Show Number"}
+         
       </a>
+   </div>
     </>
   );
 };

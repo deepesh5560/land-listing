@@ -1,21 +1,40 @@
+'use client'
+
 import { BusinessItem, ReviewItem } from "@/models/business";
 import React from "react";
 import Contact from "../hotelList/contact";
+import Image from "next/image";
+import FilledStar from "../../../public//images/filled-star.svg";
+import Star from "../../../public/images/star.svg";
+import { useRouter } from "next/navigation";
 
 const HotelDetail = ({
   data,
 }: {
-  data: { business: any; reviews: ReviewItem[] };
+  data: { business: any; reviews: ReviewItem[],avgRating:number };
 }) => {
   const business: BusinessItem = data.business.business;
+
+  const Router = useRouter()
   const address = [
-    business.buildingNo,
-    business.address,
-    business.area,
-    business.landmark,
-    business.island,
-    business.country,
+    business?.buildingNo,
+    business?.address,
+    business?.area,
+    business?.landmark,
+    business?.island,
+    business?.country,
   ].join(", ");
+  
+  const star:number[] =[];
+  const Review = data?.reviews
+  const maxRate = Math.ceil(data.avgRating)
+  for (let index = 0; index < 5; index++) {
+    if (index <= (maxRate - 1) ) {
+      star.push(1)
+    }else{
+      star.push(0)
+    }
+  }
 
 
   return (
@@ -25,12 +44,30 @@ const HotelDetail = ({
           <div className="about_hotel">
             <div className="left_details">
               <div className="">
-                <h5 className="hotel_name">{business.businessName}</h5>
+                <h5 className="hotel_name">{business?.businessName}</h5>
                 <div className="start_rating">
-                  <img src="/images/star.png" alt="" />
-                  <span>319 rating</span>
+                
+      
+                {
+              star && star.map((num,i) => {
+                return (
+                  <Image
+                    src={num === 1 ? FilledStar : Star}
+                    height={15}
+                   
+                    alt="Rating Star"
+                    style={{ marginRight: "2px" }}
+                    
+                    key={i}
+                  />
+                );
+              })
+            }
+                  <span>{Review?.length}</span>
+
+    
                 </div>
-                {business.isVerified && (
+                {business?.isVerified && (
                   <span className="verified_label">
                     <img src="/images/verfied_label.png" alt="" />
                     verified
@@ -40,13 +77,14 @@ const HotelDetail = ({
                   <img className="me-3" src="/images/location.png" alt="" />
                   {address}
                 </p>
-                <div className="btn_connecting">
-                  <Contact contact={business.contacts[0]} />
+                <div className="btn_connecting" onClick={()=>Router.push(`https://wa.me/${business?.contacts?.[0].contact}`)}>
+                  <Contact contact={business?.contacts?.[0]} />
                   <button className="btn_chat">
                     <img
                       className="me-2"
                       src="/images/logos_whatsapp-icon.png"
                       alt=""
+                      
                     />
                     Chat
                   </button>
@@ -64,7 +102,7 @@ const HotelDetail = ({
             <div className="right_star">
               <span className="star">4 Star</span>
               <span className="hotel">Hotel</span>
-              <span className="day_night">{business.price}/night</span>
+              <span className="day_night">{business?.price}/night</span>
             </div>
           </div>
         </div>

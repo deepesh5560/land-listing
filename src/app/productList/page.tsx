@@ -1,11 +1,11 @@
+import CantFind from "@/components/hotelList/CantFind";
 import HotelList from "@/components/hotelList/HotelList";
 import { createQuery } from "@/lib/helpers";
 import { networkInstance } from "@/lib/network-instance";
-import { useParams, useRouter } from "next/navigation";
 import React from "react";
 export const dynamic = "force-dynamic";
 
-const pageSize = 10;
+const pageSize = 12;
 
 // interface FilterParams {
 //   categoryId: string;
@@ -24,16 +24,14 @@ const Page = async ({
       category: searchParams.category,
       page: 1,
       limit: pageSize,
-    })}`;
+    })}${searchParams?.rating?'&ratings='+searchParams?.rating:''}`;
   } else {
-    query = `${query}&limit=${pageSize}`;
+    query = `${query}&limit=${pageSize}${searchParams?.rating?'&ratings='+searchParams?.rating:''}`;
   }
-
   const { data, error, success } = await networkInstance(
     "GET",
     `home/businesses?${query}`
   );
-
 
   if (!success || !data.success) {
     return (
@@ -46,7 +44,7 @@ const Page = async ({
           justifyContent: "center",
         }}
       >
-        <h2>{data.message}</h2>
+        <h2>{data?.message}</h2>
       </div>
     );
   }
@@ -54,7 +52,7 @@ const Page = async ({
     <div>
       <section className="breadcrumb_section">
         <div className="container">
-          <nav className="--bs-breadcrumb" aria-label="breadcrumb">
+          {/* <nav className="--bs-breadcrumb" aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
                 <a href="#">Prickly Pear island</a>
@@ -63,17 +61,21 @@ const Page = async ({
                 Hotels
               </li>
             </ol>
-          </nav>
+          </nav> */}
         </div>
       </section>
 
-      {!!data?.data.length && (
+      {data?.data.length ? (
         <HotelList
           data={data.data}
           searchParams={searchParams}
           pageInfo={data.meta}
         />
-      )}
+      ):<>
+      <div className="container">
+      <h1 className="text-center py-5 lg">No Records found</h1>
+      </div>
+      </>}
     </div>
   );
 };

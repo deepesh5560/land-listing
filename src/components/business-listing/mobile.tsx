@@ -5,18 +5,21 @@ import toast from 'react-hot-toast';
 import OtpLogin from "./otpLogin";
 import { onSendOTP } from "../dialog/login-dialog/actions";
 
+
 const mobileRegex = /^\d{0,10}$/;
 
 const MobileDetail = ({ onNext }: { onNext: () => void }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState(countryList[0].dial_code);
   const [open,setOPen]=useState(false);
+ 
 
   const onSubmit = async (e: any) => {
     if (mobileNumber.length !== 10) {
       toast.error('10 digit mobile number is required');
       return;
     }
+  
     const payload: any = {
       countryCode: countryCode,
       phoneNumber: mobileNumber,

@@ -17,7 +17,7 @@ const HotelList = ({
       <div className="container">
         <div className="row">
           <HotelLeft data={data} pageInfo={pageInfo} />
-          <HotelRight />
+          {/* <HotelRight /> */}
         </div>
       </div>
     </section>

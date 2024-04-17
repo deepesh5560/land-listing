@@ -1,27 +1,40 @@
 "use client";
 import { networkInstance } from "@/lib/network-instance";
+import useStore from "@/store/loadingState";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 
-const AddTin = ({ onNext }: { onNext: () => void }) => {
+const AddTin = ({ onNext,setIsloading }: { onNext: () => void,setIsloading:any }) => {
   const [tin, setTin] = useState("");
+
   const onSubmit = async () => {
     if(!tin){
       toast.error("Please enter TIN number!")
       return;
     }
+    setIsloading(true)
+  const payload = {tin:tin}
     const { data, error, success } = await networkInstance(
       "POST",
-      "businesses/category",
-      {"tin":tin}
+      "businesses/tin",
+      payload
     );
+
+    setIsloading(false)
+
+    
 
     if (!success) {
       toast.error(error);
       return;
     }
+     if (!data?.success) {
+      toast.error(data?.message);
+     }else{
+       localStorage.setItem("Buss_Name",data?.data.Name)
+      onNext();
 
-    onNext();
+     }
   };
 
  
@@ -38,7 +51,7 @@ const AddTin = ({ onNext }: { onNext: () => void }) => {
                 <p className="paragraph">To get Verified </p>
                 <div className="custom_form">
                   <div className="form-outline">
-                    <input type="text" className="form-control" onChange={(e)=>setTin(e.target.value)} />
+                    <input type="number" className="form-control" onChange={(e)=>setTin(e.target.value)} />
                     <label className="form-label" style={{ marginLeft: 0 }}>
                       Add TIN Number
                     </label>

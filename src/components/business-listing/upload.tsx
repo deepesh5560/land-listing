@@ -1,25 +1,33 @@
 "use client";
-import { networkInstance } from "@/lib/network-instance";
+import { multiPartInstance } from "@/lib/multiPart";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const Upload = ({ onNext }: { onNext: () => void }) => {
+const Upload = ({ onNext,setIsloading }: { onNext: () => void,setIsloading:any }) => {
   const [selectedImages, setSelectedImages] = useState<any>([]);
-useEffect(()=>{
-},[selectedImages])
+  const [selectedImagesUp, setSelectedImagesUp] = useState<any>([]);
+
  // Function to handle file selection
 const handleImageChange = (e:any) => {
-  const file = e.target.files[0];
+ 
+  const file = [...e.target.files];
+
+  setSelectedImagesUp((prev:any)=>[...prev,...file])
   if (file) {
-    const reader = new FileReader();
+    file?.forEach((myFile:any) =>{
+      const reader = new FileReader();
     reader.onloadend = () => {
       setSelectedImages((prev:any)=>[...prev,reader.result]);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(myFile);
+    })
+    
   }
 
 
 };
+
+
 
 const hnadleUpload = async () => {
 
@@ -28,15 +36,18 @@ const hnadleUpload = async () => {
     return;
   }
   const formData = new FormData();
-  selectedImages.forEach((image:any, index:number) => {
-    formData.append(`image_${index}`, image);
+  selectedImagesUp.forEach((image:any,ind:number) => {
+    const myImg = image;
+    formData.append(`images`, myImg)
   });
+  setIsloading(true)
 
-  const { data, error, success } = await networkInstance(
-    "POST",
+  const { data, error, success }:any = await multiPartInstance(
+    "post",
     "businesses/photos",
     formData
   );
+  setIsloading(false);
   if (!success) {
     console.error(error, "error");
     toast.error(error);
@@ -54,9 +65,9 @@ const hnadleUpload = async () => {
           <div className="multi_step_wrapper">
             <div className="steps step_3 pb-3">
               <img className="step_img" src="images/step3.png" alt="" />
-              <h3 className="h3_title">Upload your Business Photo</h3>
+              <h3 className="h3_title text-center">Upload your Business Photo</h3>
               <div className="custom_form">
-                <div className="custom_upload_file">
+                <div className="custom_upload_file mx-auto my-5">
                  
                   <label htmlFor="file">
                     <svg
@@ -75,7 +86,7 @@ const hnadleUpload = async () => {
   
                 </div>
                 <div>
-               <input type="file" accept="image/*" id="file"  onChange={handleImageChange} />
+               <input type="file" accept="image/*" id="file"  onChange={handleImageChange} multiple />
       {selectedImages && (
         <div>
           {selectedImages.map((image:any, index:number) => (

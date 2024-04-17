@@ -1,13 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter ,useParams, useSearchParams} from "next/navigation";
 import React from "react";
 
 const MoreCategoryBtn = ({ totalCategories }: { totalCategories: number }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const current = searchParams.get("page") ;
   const onMore = () => {
-    const params = new URLSearchParams();
-    params.set("limit", totalCategories.toString());
-    router.push(`${"/"}?${params.toString()}`);
+
+ const query = current ? `/?limit=${totalCategories}&page=${current}`:`/?limit=${totalCategories}`;
+    router.push(query);
   };
 
   return (

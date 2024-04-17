@@ -11,7 +11,7 @@ const CategoryCard = ({ detail }: { detail: CategoryItem }) => {
     "/" +
     detail.icon;
 
-    console.log(pic,"<=========")
+   
    
   return (
     <Link

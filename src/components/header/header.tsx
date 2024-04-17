@@ -3,7 +3,8 @@
 import React, { useEffect, useState }  from "react";
 import LoginDialog from "../dialog/login-dialog";
 import Link from "next/link";
-import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
+import { logout } from "@/lib/serverActions";
+import Loader from "@/models/loader";
 
 const Header = () => {
   const condition = typeof window !== "undefined";
@@ -13,7 +14,15 @@ const Header = () => {
    
      setLogs(logs?true:false)
     
-  },[])
+  },[logs])
+
+  const LogoutMe =()=>{
+    localStorage.clear()
+
+    logout()
+   
+    window.location.href ="/"
+  }
 
   return (
     <>
@@ -21,7 +30,7 @@ const Header = () => {
         <div className="container">
           <nav className="navbar navbar-expand-lg">
             <Link className="navbar-brand" href="/">
-              <img src="images/logo.png" />
+              <img src="/images/logo.png" />
             </Link>
             <button
               className="navbar-toggler"
@@ -36,43 +45,7 @@ const Header = () => {
             </button>
             <div className="collapse navbar-collapse " id="navbarNavDropdown">
               <ul className="navbar-nav ms-auto">
-                {/* <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdownMenuLink"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      className="me-3"
-                      src="images/clarity_language-line.png"
-                      alt=""
-                    />{" "}
-                    Language
-                  </a>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdownMenuLink"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
-                    </li>
-                  </ul>
-                </li> */}
+           
               {!Logs ?  <li className="nav-item">
                   <a
                     className="nav-link me-3"
@@ -87,7 +60,18 @@ const Header = () => {
                     Free Business Listing{" "}
                   </a>
                 </li>:""}
-                <LoginDialog />
+               <LoginDialog />
+
+                {Logs ?  <li className="nav-item">
+                <button
+          className="btn_login"
+          onClick={()=>LogoutMe()}
+        >
+          Logout
+        </button>
+                </li>:""}
+            
+
               </ul>
             </div>
           </nav>

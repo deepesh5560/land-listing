@@ -23,6 +23,9 @@
     category: string;
     tin: string;
     country: string;
+    paymentMode:string;
+    yearOfEstablish:number;
+    website:string
   }
 
   export interface ReviewItem {
