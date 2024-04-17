@@ -53,7 +53,8 @@ const HotelCard = ({
             <img
               src={pic}
               alt={`Slide ${i + 1}`}
-              width={265}
+              width={410}
+              height={269}
             />
           </Carousel.Item> 
       
@@ -61,7 +62,8 @@ const HotelCard = ({
       </Carousel>:(
             <div >
             <img
-              width={265}
+               width={410}
+               height={269}
               alt="..."
               src={"images/slider1.png"}
             />

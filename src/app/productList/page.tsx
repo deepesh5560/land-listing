@@ -65,17 +65,13 @@ const Page = async ({
         </div>
       </section>
 
-      {data?.data.length ? (
+      
         <HotelList
           data={data.data}
           searchParams={searchParams}
           pageInfo={data.meta}
         />
-      ):<>
-      <div className="container">
-      <h1 className="text-center py-5 lg">No Records found</h1>
-      </div>
-      </>}
+      
     </div>
   );
 };

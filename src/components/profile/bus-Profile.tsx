@@ -15,9 +15,10 @@ const BusProfile = () => {
         country: '',
         subDivision:'',
         island: '',
-        images:[]
     })
-
+    
+    const [imgs,setImgs]=useState([])
+    
     const [constDetail,setconstDetail]= useState({
       contactPerson: "",
       gender: "",
@@ -34,22 +35,19 @@ const BusProfile = () => {
             "GET",
             `profile`
           );
-          console.log(data)
-          if(success){
+          if(data?.data?.phoneNumber){
             const value =data?.data?.business
-            setDetails({  businessName: value.businessName,
-            address: value.address,
-            buildingNo: value.buildingNo,
-            area:value.area,
-            postalCode: value.postalCode,
-            landmark: value.landmark,
-            country: value.country,
-            subDivision:value.subDivision,
-            island: value.island,
-            images:value.images || []
-          
+            setDetails({  businessName: value?.businessName,
+            address: value?.address,
+            buildingNo: value?.buildingNo,
+            area:value?.area,
+            postalCode: value?.postalCode,
+            landmark: value?.landmark,
+            country: value?.country,
+            subDivision:value?.subDivision,
+            island: value?.island,
           })
-         
+          setImgs(value?.images || [])
             const contact =data?.data
             setconstDetail({
               countryCode:contact?.countryCode,
@@ -64,12 +62,11 @@ const BusProfile = () => {
     }
     const updateDetails = async()=>{
         const { data, error, success } = await networkInstance(
-            "PUT",
-            `profile`,
+            "POST",
+            "businesses/store",
             detail
           );
-
-          if(success){
+          if(data?.success){
             toast.success('Profile Updated Successfully')
           }else{
             toast.error('Unable to Update profile')
@@ -104,7 +101,7 @@ const BusProfile = () => {
   return (
     <>
 
-<ProfileUpload images={detail.images}/>
+<ProfileUpload images={imgs}/>
 
 
     <div className="business_profile_wrapper">
@@ -121,7 +118,7 @@ const BusProfile = () => {
            </div>
          <div className="col-md-6">
             <div className="form-outline">
-                <input type="text"  className="form-control" value={detail.postalCode || ''}  onChange={(e)=>setDetails({...detail,postalCode:e.target.value})} />
+                <input type="number"  className="form-control" value={detail.postalCode || ''}  onChange={(e)=>setDetails({...detail,postalCode:e.target.value})} />
                 <label className="form-label" style={{ marginLeft:" 0px"}}>Postal Code</label>
               </div>
          </div>

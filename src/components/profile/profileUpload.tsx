@@ -4,7 +4,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const ProfileUpload = ({images}:{images:any[]}) => {
-  console.log(images)
   const [selectedImages, setSelectedImages] = useState<any>([]);
   const [selectedImagesUp, setSelectedImagesUp] = useState<any>([]);
 

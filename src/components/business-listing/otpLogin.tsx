@@ -41,6 +41,7 @@ const OtpLogin = ({open,close, onNext,countryCode,mobileNumber}:{open:any,close:
           localStorage.setItem("role", data.user.role);
           close(false)
           setRole(data.user.role)
+      
           if ((data.user.role === 'business' && data.user?.business?.address)|| data.user.role === 'user'  ) {
 
           Router.push('/user/profile')

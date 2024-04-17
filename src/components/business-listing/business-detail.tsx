@@ -51,8 +51,7 @@ const BusinessDetail = ({ onNext,setIsloading }: { onNext: () => void,setIsloadi
       country: detail.country,
       subDivision: detail.subdivision,
       island: detail.island,
-      website:"www.web.com",
-      facilities:["AC"],
+      
     };
     setIsloading(true)
     const { data, error, success } = await networkInstance(

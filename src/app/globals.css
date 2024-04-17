@@ -1522,3 +1522,9 @@ input[type=number] {
     cursor: pointer;
     position: absolute;
 }
+
+.user_review_card img {
+    width:73px;
+    height: 73px;
+    border-radius: 50%;
+}
