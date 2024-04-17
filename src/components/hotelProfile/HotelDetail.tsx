@@ -100,9 +100,8 @@ const HotelDetail = ({
               </div>
             </div>
             <div className="right_star">
-              <span className="star">4 Star</span>
+              <span className="star">{maxRate} Star</span>
               <span className="hotel">Hotel</span>
-              <span className="day_night">{business?.price}/night</span>
             </div>
           </div>
         </div>
