@@ -16,7 +16,7 @@ const ReviewCards = ({ review }: { review: ReviewItem }) => {
       <div className="card_head">
         <div className="profile_img_name">
          <div>
-         <div><img src={review?.user?.avatar ? pic : "/images/user.png"} alt="" /></div>
+         <div><img width={73} height={73} style={{borderRadius:"50%"}} src={review?.user?.avatar ? pic : "/images/user.png"} alt="" /></div>
           </div>        
           <div className="name_star">
             <span>{review.user.name || "Guest"}</span>

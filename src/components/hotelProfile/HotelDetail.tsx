@@ -77,9 +77,9 @@ const HotelDetail = ({
                   <img className="me-3" src="/images/location.png" alt="" />
                   {address}
                 </p>
-                <div className="btn_connecting" onClick={()=>Router.push(`https://wa.me/${business?.contacts?.[0].contact}`)}>
+                <div className="btn_connecting" >
                   <Contact contact={business?.contacts?.[0]} />
-                  <button className="btn_chat">
+                  <button className="btn_chat" onClick={()=>Router.push(`https://wa.me/${business?.contacts?.[0].contact}`)}>
                     <img
                       className="me-2"
                       src="/images/logos_whatsapp-icon.png"

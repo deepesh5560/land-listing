@@ -85,12 +85,12 @@ const hnadleUpload = async () => {
                   </label>
   
                 </div>
-                <div>
+                <div style={{display:"flex",justifyContent:"center"}}>
                <input type="file" accept="image/*" id="file"  onChange={handleImageChange} multiple />
       {selectedImages && (
-        <div>
+        <div style={{display: "flex", flexDirection: "column"}}>
           {selectedImages.map((image:any, index:number) => (
-            <img key={index} src={image} alt={`Selected ${index + 1}`} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
+            <img key={index} src={image} alt={`Selected ${index + 1}`} height={200} width={355} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
           ))}
         </div>
       )}

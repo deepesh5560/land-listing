@@ -15,8 +15,8 @@ const days = [
 
 const initialData = {
   days: days,
-  checkIn: "",
-  checkOut: "",
+  checkIn: "01:00",
+  checkOut: "01:00",
 };
 
 const BusinessTimings = ({ onNext,setIsloading }: { onNext: () => void,setIsloading:any }) => {

@@ -3,6 +3,7 @@ import { networkInstance } from '@/lib/network-instance'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import ProfileUpload from './profileUpload'
+import { countryList } from '@/lib/location'
 
 const BusProfile = () => {
     const [detail,setDetails]=useState({
@@ -50,8 +51,8 @@ const BusProfile = () => {
           setImgs(value?.images || [])
             const contact =data?.data
             setconstDetail({
-              countryCode:contact?.countryCode,
-              mobileNumber:contact?.phoneNumber,
+              countryCode:contact?.business?.contacts[0]?.countryCode,
+              mobileNumber:contact?.business?.contacts[0]?.contact,
               email:value?.email,
               gender:value?.gender,
               contactPerson: value?.contactPersion
@@ -84,13 +85,12 @@ const BusProfile = () => {
         },
         email: constDetail.email,
       };
-  
       const { data, error, success } = await networkInstance(
         "POST",
         "businesses/contactDetails",
         payload
       );
-  
+      console.log(data)
       if(success){
         toast.success('Contact Updated Successfully')
        
@@ -210,12 +210,24 @@ const BusProfile = () => {
     </div>
     <div className="row_form custom_2">
       <div className="small_input select_custom" >
-        <select disabled>
-          <option value="">{constDetail.countryCode}</option>
-        </select>
+        
+        <select
+                      name="countryCode"
+                      value={constDetail.countryCode}
+                      onChange={(e)=>setconstDetail({...constDetail,countryCode:e.target.value})}
+                      style={{height:"48.5px",padding:"5px"}}
+                    >
+                      {countryList.map((item, index) => {
+                        return (
+                          <option value={item.dial_code} key={index} className="">
+                            <p>{item.code + " " + item.dial_code}</p>
+                          </option>
+                        );
+                      })}
+                    </select>
       </div>
     <div className="form-outline">
-      <input type="text" value={constDetail.mobileNumber}  className="form-control" disabled/>
+      <input type="number" onChange={(e)=>setconstDetail({...constDetail,mobileNumber:e.target.value})} value={constDetail.mobileNumber}  className="form-control" />
       <label className="form-label" style={{marginLeft: "0px"}}>Contact number</label>
     </div>
     </div>

@@ -471,6 +471,7 @@ button.btn_chat {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 66%;
 }
 
 .can_not_find .text_img {
@@ -1523,8 +1524,3 @@ input[type=number] {
     position: absolute;
 }
 
-.user_review_card img {
-    width:73px;
-    height: 73px;
-    border-radius: 50%;
-}

@@ -12,7 +12,7 @@ const initialData :any = {
   contactPerson: "",
   gender: "Mr.",
   mobileNumber: "",
-  countryCode: "+93s",
+  countryCode: "+93",
   email: "",
 };
 

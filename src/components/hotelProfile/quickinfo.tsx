@@ -99,9 +99,7 @@ const Quickinfo = ({
                   <p>Complimentary Breakfast</p>
                 </div>
               </div>
-              <div className="view_all">
-                <button>View All</button>
-              </div>
+           
             </div>
 
             <div className="photos_block">
