@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from "next/headers";
 
-type methodType = "GET" |  "POST" | "PUT" 
+type methodType = "GET" |  "POST" | "PUT" | "DELETE";
 
 export async function networkInstance(method:methodType,url:string,payload?:any) {
 

@@ -1,5 +1,6 @@
 "use client";
 import { multiPartInstance } from "@/lib/multiPart";
+import { networkInstance } from "@/lib/network-instance";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -33,7 +34,18 @@ const handleImageChange = (e:any) => {
 
 };
 
-
+const updateDetails = async(image:any)=>{
+  const { data, error, success } = await networkInstance(
+      "POST",
+      "businesses/deleteBusinessImage",
+      image
+    );
+    if(data?.success){
+      toast.success('Image Delete Successfully')
+    }else{
+      toast.error('Unable to Image Delete')
+    }
+}
 
 const hnadleUpload = async () => {
 
@@ -61,7 +73,7 @@ const hnadleUpload = async () => {
   }
 }
 
-const handleDel = (ind:number)=>{
+const handleDel = (ind:number,image:any)=>{
   setSelectedImagesUp((prev:any)=>{
     return prev.filter((_:any,i:number)=>{
       return i!==ind
@@ -73,6 +85,8 @@ const handleDel = (ind:number)=>{
       return i!==ind
     })
   })
+
+  updateDetails({image})
 
 }
 
@@ -116,7 +130,7 @@ const handleDel = (ind:number)=>{
                  
           
           return  <div style={{position:"relative"}}> <img key={index} src={isUrl?pic: image} alt={`Selected ${index + 1}`} height={200} width={355} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
-            <img src="/images/deleteIcon.png" width={20} height={20} className="trashIMG" alt="" onClick={()=>handleDel(index)} />
+            <img src="/images/deleteIcon.png" width={20} height={20} className="trashIMG" alt="" onClick={()=>handleDel(index,image)} />
             </div>
             }
            
