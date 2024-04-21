@@ -15,13 +15,15 @@ export async function multiPartInstance(method:string,url:string,payload?:any) {
   }
 
     try {
-
-   const response =   await axios(config)
+   console.log("here")
+   
+   const response =   await axios(config);
+   console.log(response)
    if (response.status == 200)  {
   return { success: true, data: response?.data, error: null };
     
    }else{
-  return { success: false, data: response?.data, error: null };
+  return { success: false, data: null, error: null };
 
    }
 

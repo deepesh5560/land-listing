@@ -65,8 +65,8 @@ const Quickinfo = ({
     <section className="information_block">
       <div className="container">
         <div className="row">
-          <div className="col-md-9 left">
-            <div className="quick_information">
+          <div className="col-md-12 left">
+            {/* <div className="quick_information">
               <h5>Quick Information</h5>
               <div className="row">
                 <div className="col-md-6">
@@ -78,41 +78,41 @@ const Quickinfo = ({
                   <p>{business.yearOfEstablish}</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="facilities_timing_complimentary">
               <div className="row">
-                <div className="col-md-5 faclities">
+                {/* <div className="col-md-5 faclities">
                   <h5>Facilities</h5>
                   {business?.facilities.map((item, index) => {
                     return <p key={index}>{item}</p>;
                   })}
-                </div>
+                </div> */}
                 <div className="col-md-3 faclities">
                   <h5>Timing</h5>
                
                   <p>Check In-{business?.workingTime[0]} PM</p>
                   <p>Check Out-{business?.workingTime[1]} AM</p>
                 </div>
-                <div className="col-md-4 text-right faclities">
+                {/* <div className="col-md-4 text-right faclities">
                   <h5>Complimentary</h5>
                   <p>Complimentary Breakfast</p>
-                </div>
+                </div> */}
               </div>
            
             </div>
 
             <div className="photos_block">
-              <h4 className="h4_title">Photos</h4>
+              {images.length?<h4 className="h4_title">Photos</h4>:""}
                 
                 <div id="photo-block" style={{display:'flex',gap:"40px",maxWidth:"960px",overflow:"scroll"}}>
-                  {images.map((image,index) =>{
+                  {images.length? images.map((image,index) =>{
                           const pic =
                           process.env.NEXT_PUBLIC_BASE_API_URL?.split("/api/v1/")[0] +
                           "/" +
                           image;
                     return <div key={index} id={`photos_block_${index}`} className="photos_info" ><img src={pic} width={180} height={120} alt="" /></div>
-                  })}
+                  }):''}
                   
                  <div  className="next-pic-btn"> {isOverflow&&<div className="next-pic-btn2" onClick={()=>rotateLeft()}><img   src="/images/next.png" alt="" /></div>}</div>
                 </div>
@@ -128,7 +128,7 @@ const Quickinfo = ({
                 </>
               )}
 
-              <h4 className="h4_title py-4">User Review</h4>
+             {addReview.length?<h4 className="h4_title py-4">User Review</h4>:''}
 
               <div className="user_review_block">
                 { addReview && addReview.map((item) => {
@@ -137,7 +137,7 @@ const Quickinfo = ({
               </div>
             </div>
           </div>
-          <div className="col-md-3 right">
+          {/* <div className="col-md-3 right">
             <div className="hotel_address">
               <div className="site_name">
                 <span>{business.website}</span>
@@ -188,7 +188,7 @@ const Quickinfo = ({
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

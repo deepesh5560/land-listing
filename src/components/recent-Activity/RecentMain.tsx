@@ -37,7 +37,7 @@ const loadMore = () =>{
 }
   return (
     <section className="recent_activity">
-      <div className="container px-0">
+      {list?.data.length && <div className="container px-0">
         <h3 style={{marginTop:"32px"}}>Top Rated Business</h3>
         <div className="row">
           {
@@ -48,11 +48,11 @@ const loadMore = () =>{
           }
           
 
-        {totalPage !== 1 ?  <div className="py-3 col-12 text-center">
+        {totalPage !== 1 && list?.data > 3 ?  <div className="py-3 col-12 text-center">
             <button className="load_more" onClick={()=> loadMore()}>Load More</button>
           </div>:""}
         </div>
-      </div>
+      </div>}
     </section>
   );
 };

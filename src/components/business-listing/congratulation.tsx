@@ -17,14 +17,13 @@ const Congratulations = ({ onNext }: { onNext: () => void }) => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="text_block col-md-7">
-              <h3 className="h3_title">Enter Your Business Detail</h3>
+              <h3 className="h3_title">Your Business Registered With Us.</h3>
               <p className="paragraph">
-                Your business is now register with landlisting
-              </p>
+                Have A Great Experience Ahead.              </p>
               <img className="img-fluid" src="images/completed.png" alt="" />
-              <p className="paragraph">
+              {/* <p className="paragraph">
                 Just need few more steps to complete your business profile
-              </p>
+              </p> */}
               <div className="btn_form">
                 <button onClick={onSubmit}>Continue</button>
               </div>

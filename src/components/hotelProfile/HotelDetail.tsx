@@ -35,7 +35,15 @@ const HotelDetail = ({
       star.push(0)
     }
   }
+  const copyCurrentLink = () => {
+    const currentUrl = window.location.href;
 
+    navigator.clipboard.writeText(currentUrl)
+   
+  };
+  const openLinkInNewTab = () => {
+    window.open(`https://wa.me/${business?.contacts?.[0].contact}`, "_blank");
+  };
 
   return (
     <>
@@ -79,7 +87,7 @@ const HotelDetail = ({
                 </p>
                 <div className="btn_connecting" >
                   <Contact contact={business?.contacts?.[0]} />
-                  <button className="btn_chat" onClick={()=>Router.push(`https://wa.me/${business?.contacts?.[0].contact}`)}>
+                  <button className="btn_chat" onClick={()=>openLinkInNewTab()}>
                     <img
                       className="me-2"
                       src="/images/logos_whatsapp-icon.png"
@@ -88,14 +96,11 @@ const HotelDetail = ({
                     />
                     Chat
                   </button>
-                  <button className="btn_share btn_c">
+                  <button className="btn_share btn_c" onClick={()=>copyCurrentLink()}>
                     <img className="me-2" src="/images/mdi_share.png" alt="" />
                     Share
                   </button>
-                  <button className="btn_rate btn_c">
-                    <img className="me-2" src="/images/like.png" alt="" />
-                    Tap to Rate
-                  </button>
+                 
                 </div>
               </div>
             </div>
