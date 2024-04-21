@@ -1,13 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const CategoryHomeFilter = () => {
+  const condition = typeof window !== "undefined";
+
   const [filterDetail, setFilterDetail] = useState({ name: "", location: "" });
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
+  const Limit:any=condition&& localStorage.getItem("Limit");
 
+  useEffect(()=>{
+if(!Limit && parseInt(Limit) !=0){
+  localStorage.setItem("Limit",'0');
+}
+  },[])
   const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterDetail({ ...filterDetail, [e.target.name]: e.target.value });
   };

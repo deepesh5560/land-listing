@@ -4,8 +4,7 @@ import React, { useEffect, useState }  from "react";
 import LoginDialog from "../dialog/login-dialog";
 import Link from "next/link";
 import { logout } from "@/lib/serverActions";
-import Loader from "@/models/loader";
-
+import LoginPop from "../dialog/loginPop/loginPop";
 const Header = () => {
   const condition = typeof window !== "undefined";
   const logs = condition &&  localStorage.getItem('LOGGED_IN')
@@ -61,6 +60,7 @@ const Header = () => {
                   </a>
                 </li>:""}
                <LoginDialog />
+              
 
                 {Logs ?  <li className="nav-item">
                 <button

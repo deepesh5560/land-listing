@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { countryList } from "@/lib/location";
 import { setRole } from "@/lib/serverActions";
+import LoginPop from "../loginPop/loginPop";
+import useStore from "@/store/loadingState";
 
 const mobileRegex = /^\d{0,10}$/;
 
@@ -39,13 +41,18 @@ const LoginDialog = ({}: Props) => {
   const [otp, setOTP] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<string | null>("");
+  const [isLimit, setLimit] = useState<boolean>(false);
+  
   const Auth =condition ? localStorage.getItem("LOGGED_IN") : ""
+  const { count,isloaded } = useStore()
+
 
   const toggle = () => {
     if (isLoggedIn) {
       router.push("/user/profile");
       return;
     }
+    setLimit(false)
 
     if (open) {
       setOtpSent(false);
@@ -113,6 +120,15 @@ const LoginDialog = ({}: Props) => {
   useEffect(() => {
     setIsLoggedIn(() => (condition ? localStorage.getItem("LOGGED_IN") : ""));
   }, [Auth]);
+
+  useEffect(()=>{
+    if (isloaded) {
+      if(!Auth && (count > 5)  ){
+        setLimit(true);
+      }
+    }
+   
+  },[Auth,count])
 
   return (
     <>
@@ -210,6 +226,10 @@ const LoginDialog = ({}: Props) => {
           </dialog>
         </div>
       )}
+
+      {
+        !isLoggedIn && isLimit? <LoginPop toggle={toggle} setLimit={setLimit}/> :""
+      }
     </>
   );
 };

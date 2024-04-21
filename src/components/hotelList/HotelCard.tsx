@@ -8,6 +8,8 @@ import Image from "next/image";
 import FilledStar from "../../../public//images/filled-star.svg";
 import Star from "../../../public/images/star.svg";
 import { Carousel } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+import useStore from "@/store/loadingState";
 
 const HotelCard = ({
   data,
@@ -18,7 +20,11 @@ const HotelCard = ({
   id: string;
   rating: { avgRating: number; totalRating: number };
 }) => {
-
+  const condition = typeof window !== "undefined";
+  const logs = condition &&  localStorage.getItem('LOGGED_IN')
+  const visits:any= condition &&  localStorage.getItem('Visits')
+  const { count, inc } = useStore()
+const Router=useRouter()
   const address = [
     data?.buildingNo,
     data?.address,
@@ -27,6 +33,30 @@ const HotelCard = ({
     data?.island,
     data?.country,
   ].join(", ");
+
+  const handleClick =()=>{
+    let totalVisits= JSON.parse(visits) || [];
+
+    const isAvailable = totalVisits.includes(id);
+
+
+   if(logs || isAvailable || count <5){
+    Router.push(`/productList/${id}`)
+   }
+   
+     if (!isAvailable) {
+      if(totalVisits.length === 5){
+        inc();
+        return;
+       }
+      inc();
+       totalVisits.push(id);
+       localStorage.setItem("Visits", JSON.stringify(totalVisits));
+
+     }
+      
+     }
+  
 
   const star: number[] = [];
   const maxRate = Math.ceil(rating.totalRating);
@@ -39,7 +69,8 @@ const HotelCard = ({
   }
   return (
     <div  key={id}>
-      <Link className="hotel_card"  href={`/productList/${id}`}>
+
+      <div className="hotel_card" style={{cursor:"pointer"}}  onClick={()=>handleClick()}>
       <div className="img_crousel">
    
 {data?.images?.length ? <Carousel>
@@ -107,7 +138,7 @@ const HotelCard = ({
           </button>
         </div>
       </div>
-      </Link>
+      </div>
     </div>
   );
 };
